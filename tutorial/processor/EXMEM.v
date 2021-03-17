@@ -5,74 +5,74 @@ module EXMEM(
     input logic rst,
     input logic cHazard,
 
-    input `InsnAddrPath exmemPCAddrIn,
-    input `DataPath exmemALUOutIn,
-    input `BrCodePath exmemBrCodeIn,
+    input `InsnAddrPath PCAddrIn,
+    input `DataPath ALUOutIn,
+    input `BrCodePath BrCodeIn,
 
-    input logic exmemIsDstRtIn,    
-    input logic exmemRdWrEnableIn,
-    input logic exmemIsStoreInsnIn,
-    input logic exmemIsLoadInsnIn,
-    input logic exmemPcWrEnableIn,
+    input logic IsDstRtIn,    
+    input logic RdWrEnableIn,
+    input logic IsStoreInsnIn,
+    input logic IsLoadInsnIn,
+    input logic PcWrEnableIn,
 
-    input `DataPath exmemRdDataBIn,
-    input `ConstantPath exmemConstantIn,
+    input `DataPath RdDataBIn,
+    input `ConstantPath ConstantIn,
 
-    input `RegNumPath exmemRSIn,
-    input `RegNumPath exmemRTIn,
-    input `RegNumPath exmemRDIn,
+    input `RegNumPath RSIn,
+    input `RegNumPath RTIn,
+    input `RegNumPath RDIn,
 
 
-    output `InsnAddrPath exmemPCAddrOut,
-    output `DataPath exmemALUOutOut,
-    output `BrCodePath exmemBrCodeOut,
+    output `InsnAddrPath PCAddrOut,
+    output `DataPath ALUOutOut,
+    output `BrCodePath BrCodeOut,
 
-    output logic exmemIsDstRtOut,    
-    output logic exmemRdWrEnableOut,
-    output logic exmemIsStoreInsnOut,
-    output logic exmemIsLoadInsnOut,
-    output logic exmemPcWrEnableOut,
+    output logic IsDstRtOut,    
+    output logic RdWrEnableOut,
+    output logic IsStoreInsnOut,
+    output logic IsLoadInsnOut,
+    output logic PcWrEnableOut,
 
-    output `DataPath exmemRdDataBOut,
-    output `ConstantPath exmemConstantOut,
+    output `DataPath RdDataBOut,
+    output `ConstantPath ConstantOut,
 
-    output `RegNumPath exmemRSOut,
-    output `RegNumPath exmemRTOut,
-    output `RegNumPath exmemRDOut,
+    output `RegNumPath RSOut,
+    output `RegNumPath RTOut,
+    output `RegNumPath RDOut,
 )
 
     always_ff @(posedge clk or negedge rst) begin
         if(cHazard) begin
-            exmemPCAddrOut <= `InsnAddrPath'h0;
-            exmemALUOutOut <= `DataPath'h0;
-            exmemBrCodeOut <= `BrCodePath'h0;
-            exmemIsDstRtOut <= `FALSE;
-            exmemRdWrEnableOut <= `FALSE;
-            exmemIsStoreInsnOut <= `FALSE;
-            exmemIsLoadInsnOut <= `FALSE;
-            exmemPcWrEnableOut <= `FALSE;
+         PCAddrOut <= `InsnAddrPath'h0;
+         ALUOutOut <= `DataPath'h0;
+         BrCodeOut <= `BrCodePath'h0;
+         IsDstRtOut <= `FALSE;
+         RdWrEnableOut <= `FALSE;
+         IsStoreInsnOut <= `FALSE;
+         IsLoadInsnOut <= `FALSE;
+         PcWrEnableOut <= `FALSE;
 
-            exmemRdDataBOut <= `DataPath'h0;
-            exmemConstantOut <= `ConstantPath'h0;
-            exmemRSOut <= `RegNumPath'h0;
-            exmemRTOut <= `RegNumPath'h0;
-            exmemRDOut <= `RegNumPath'h0;
+         RdDataBOut <= `DataPath'h0;
+         ConstantOut <= `ConstantPath'h0;
+         RSOut <= `RegNumPath'h0;
+         RTOut <= `RegNumPath'h0;
+         RDOut <= `RegNumPath'h0;
         end
         else begin
-            exmemPCAddrOut <= exmemPCAddrIn;
-            exmemALUOutOut <= exmemPCAddrIn;
-            exmemBrCodeOut <= exmemBrCodeIn;
-            exmemIsDstRtOut <= exmemIsDstRtIn;
-            exmemRdWrEnableOut <= exmemRdWrEnableIn;
-            exmemIsStoreInsnOut <= exmemIsStoreInsnIn;
-            exmemIsLoadInsnOut <= exmemIsLoadInsnIn;
-            exmemPcWrEnableOut <= exmemPcWrEnableIn;
+         PCAddrOut <= PCAddrIn;
+         ALUOutOut <= PCAddrIn;
+         BrCodeOut <= BrCodeIn;
+         IsDstRtOut <= IsDstRtIn;
+         RdWrEnableOut <= RdWrEnableIn;
+         IsStoreInsnOut <= IsStoreInsnIn;
+         IsLoadInsnOut <= IsLoadInsnIn;
+         PcWrEnableOut <= PcWrEnableIn;
 
-            exmemRdDataBOut <= exmemRdDataBIn;
-            exmemConstantOut <= exmemConstantIn;
-            exmemRSOut <= exmemRSIn;
-            exmemRTOut <= exmemRTIn;
-            exmemRDOut <= exmemRDIn;
+         RdDataBOut <= RdDataBIn;
+         ConstantOut <= ConstantIn;
+         RSOut <= RSIn;
+         RTOut <= RTIn;
+         RDOut <= RDIn;
         end
     end
 
