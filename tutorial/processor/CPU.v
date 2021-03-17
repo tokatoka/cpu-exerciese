@@ -118,13 +118,18 @@ module CPU(
 	`RegNumPath memwbWrNumIn;
 	logic memwbIsLoadInsnIn;
 	logic memwbRfWrEnableIn;
+	`RegNumPath memwbRSIn;
+	`RegNumPath memwbRTIn;
+	`RegNumPath memwbRDIn;
 
 	`DataPath memwbDataOut;
 	`DataPath memwbAluOutOut;
 	`RegNumPath memwbWrNumOut;
 	logic memwbIsLoadInsnOut;
 	logic memwbRfWrEnableOut;
-
+	`RegNumPath memwbRSOut;
+	`RegNumPath memwbRTOut;
+	`RegNumPath memwbRDOut;
 
 	IFID ifid(
 		//common
@@ -237,12 +242,18 @@ module CPU(
 		memwbWrNumIn,
 		memwbIsLoadInsnIn,
 		memwbRfWrEnableIn,
+		memwbRSIn,
+		memwbRTIn,
+		memwbRDIn,
 
 		memwbDataOut,
 		memwbAluOutOut,
 		memwbWrNumOut,
 		memwbIsLoadInsnOut,
-		memwbRfWrEnableOut
+		memwbRfWrEnableOut,
+		memwbRSOut,
+		memwbRTOut,
+		memwbRDOut,
 	);
 
 	Decoder decoder(
@@ -284,7 +295,7 @@ module CPU(
 		pcIn,
 
 		//input
-		pcOut,
+		exmemPCAddrOut,
 		exmemBrCodeOut,
 		exmemRdDataAOut,
 		exmemRdDataBOut,
@@ -333,6 +344,13 @@ module CPU(
 		exmemRTIn = idexRTOut;
 		exmemRDIn = idexRDOut;
 
+		memwbAluOutIn = exmemALUOutOut;
+		memwbRfWrEnableIn = exmemRfWrEnableOut;
+		memwbIsLoadInsnIn = exmemIsLoadInsnOut;
+		memwbWrNumIn = exmemWrNumOut;
+		memwbRSIn = exmemRSOut;
+		memwbRTIn = exmemRTOut;
+		memwbRDIn = exmemRDOut;
 
 		insnAddr = pcIn;
 

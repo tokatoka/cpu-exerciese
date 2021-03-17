@@ -10,13 +10,20 @@ module MEMWB(
     input `RegNumPath WrNumIn,
     input logic IsLoadInsnIn,
     input logic RfWrEnableIn,
+    input `RegNumPath RSIn,
+    input `RegNumPath RTIn,
+    input `RegNumPath RDIn,
+
 
     output `DataPath RdDataMemOut,
     output `DataPath AluOutOut,
 
     output `RegNumPath WrNumOut,
     output logic IsLoadInsnOut,
-    output logic RfWrEnableOut
+    output logic RfWrEnableOut,
+    output `RegNumPath RSOut,
+    output `RegNumPath RTOut,
+    output `RegNumPath RDOut
 );
 
     always_ff @(posedge clk or negedge rst) begin
@@ -27,6 +34,9 @@ module MEMWB(
 
             IsLoadInsnOut <= `FALSE;
             RfWrEnableOut <= `FALSE;
+            RSOut <= `REG_NUM_WIDTH'h0;
+            RTOut <= `REG_NUM_WIDTH'h0;
+            RDOut <= `REG_NUM_WIDTH'h0;
         end
         else begin
             RdDataMemOut <= RdDataMemIn;
@@ -35,6 +45,9 @@ module MEMWB(
 
             IsLoadInsnOut <= IsLoadInsnIn;
             RfWrEnableOut <= RfWrEnableIn;
+            RSOut <= RSIn;
+            RTOut <= RTIn;
+            RDOut <= RDIn;
         end
     end
 
