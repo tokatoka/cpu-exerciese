@@ -84,7 +84,6 @@ module CPU(
 	`InsnAddrPath exmemPCAddrIn;
 	`DataPath exmemALUOutIn;
 	`BrCodePath exmemBrCodeIn;
-	logic exmemIsDstRtIn;
 	logic exmemRfWrEnableIn;
 	logic exmemIsStoreInsnIn;
 	logic exmemIsLoadInsnIn;
@@ -101,7 +100,6 @@ module CPU(
 	`InsnAddrPath exmemPCAddrOut;
 	`DataPath exmemALUOutOut;
 	`BrCodePath exmemBrCodeOut;
-	logic exmemIsDstRtOut;
 	logic exmemRfWrEnableOut;
 	logic exmemIsStoreInsnOut;
 	logic exmemIsLoadInsnOut;
@@ -199,7 +197,6 @@ module CPU(
 		exmemPCAddrIn,
 		exmemALUOutIn,
 		exmemBrCodeIn,
-		exmemIsDstRtIn,
 		exmemRfWrEnableIn,
 		exmemIsStoreInsnIn,
 		exmemIsLoadInsnIn,
@@ -216,7 +213,6 @@ module CPU(
 		exmemPCAddrOut,
 		exmemALUOutOut,
 		exmemBrCodeOut,
-		exmemIsDstRtOut,
 		exmemRfWrEnableOut,
 		exmemIsStoreInsnOut,
 		exmemIsLoadInsnOut,
@@ -325,7 +321,6 @@ module CPU(
 
 		exmemPCAddrIn = idexPCAddrOut;
 		exmemBrCodeIn = idexBrCodeOut;
-		exmemIsDstRtIn = idexIsDstRtOut;
 		exmemRfWrEnableIn = idexRfWrEnableOut;
 		exmemIsStoreInsnIn = idexIsStoreInsnOut;
 		exmemIsLoadInsnIn = idexIsLoadInsnOut;
