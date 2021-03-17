@@ -52,7 +52,7 @@ module PC(
 )
 
     always_ff @(posedge clk or negedge rst) begin
-        if(cHazard) begin
+        if(cHazard or !rst) begin
             PCAddrIn <= `InsnAddrPath'h0;
 
             IsDstRtOut <= `FALSE;

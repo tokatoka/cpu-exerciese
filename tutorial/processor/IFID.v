@@ -14,7 +14,7 @@ module IFED(
 )
 
     always_ff @(posedge clk or negedge rst) begin
-        if(cHazard) begin
+        if(cHazard or !rst) begin
             PCAddrOut = `InsnAddrPath'h0;
             InsnOut = `InsnPath'h0;
         end
