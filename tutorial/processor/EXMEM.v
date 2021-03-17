@@ -15,6 +15,7 @@ module EXMEM(
     input logic IsLoadInsnIn,
     input logic PcWrEnableIn,
 
+    input `DataPath RdDataAIn,
     input `DataPath RdDataBIn,
     input `ConstantPath ConstantIn,
 
@@ -34,6 +35,7 @@ module EXMEM(
     output logic IsLoadInsnOut,
     output logic PcWrEnableOut,
 
+    output `DataPath RdDataAOut,
     output `DataPath RdDataBOut,
     output `ConstantPath ConstantOut,
 
@@ -45,40 +47,42 @@ module EXMEM(
 
     always_ff @(posedge clk or negedge rst) begin
         if(cHazard or !rst) begin
-         PCAddrOut <= `InsnAddrPath'h0;
-         ALUOutOut <= `DataPath'h0;
-         BrCodeOut <= `BrCodePath'h0;
-         IsDstRtOut <= `FALSE;
-         RfWrEnableOut <= `FALSE;
-         IsStoreInsnOut <= `FALSE;
-         IsLoadInsnOut <= `FALSE;
-         PcWrEnableOut <= `FALSE;
+            PCAddrOut <= `InsnAddrPath'h0;
+            ALUOutOut <= `DataPath'h0;
+            BrCodeOut <= `BrCodePath'h0;
+            IsDstRtOut <= `FALSE;
+            RfWrEnableOut <= `FALSE;
+            IsStoreInsnOut <= `FALSE;
+            IsLoadInsnOut <= `FALSE;
+            PcWrEnableOut <= `FALSE;
 
-         RdDataBOut <= `DataPath'h0;
-         ConstantOut <= `ConstantPath'h0;
+            RdDataAIn <= `DataPath'h0;
+            RdDataBOut <= `DataPath'h0;
+            ConstantOut <= `ConstantPath'h0;
 
-         WrNumIn <= `RegNumPath'h0;
-         RSOut <= `RegNumPath'h0;
-         RTOut <= `RegNumPath'h0;
-         RDOut <= `RegNumPath'h0;
+            WrNumIn <= `RegNumPath'h0;
+            RSOut <= `RegNumPath'h0;
+            RTOut <= `RegNumPath'h0;
+            RDOut <= `RegNumPath'h0;
         end
         else begin
-         PCAddrOut <= PCAddrIn;
-         ALUOutOut <= PCAddrIn;
-         BrCodeOut <= BrCodeIn;
-         IsDstRtOut <= IsDstRtIn;
-         RfWrEnableOut <= RdWrEnableIn;
-         IsStoreInsnOut <= IsStoreInsnIn;
-         IsLoadInsnOut <= IsLoadInsnIn;
-         PcWrEnableOut <= PcWrEnableIn;
+            PCAddrOut <= PCAddrIn;
+            ALUOutOut <= PCAddrIn;
+            BrCodeOut <= BrCodeIn;
+            IsDstRtOut <= IsDstRtIn;
+            RfWrEnableOut <= RdWrEnableIn;
+            IsStoreInsnOut <= IsStoreInsnIn;
+            IsLoadInsnOut <= IsLoadInsnIn;
+            PcWrEnableOut <= PcWrEnableIn;
 
-         RdDataBOut <= RdDataBIn;
-         ConstantOut <= ConstantIn;
+            RdDataAOut <= RdDataAIn;
+            RdDataBOut <= RdDataBIn;
+            ConstantOut <= ConstantIn;
 
-         WrNumOut <= WrNumIn;
-         RSOut <= RSIn;
-         RTOut <= RTIn;
-         RDOut <= RDIn;
+            WrNumOut <= WrNumIn;
+            RSOut <= RSIn;
+            RTOut <= RTIn;
+            RDOut <= RDIn;
         end
     end
 

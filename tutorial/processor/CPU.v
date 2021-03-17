@@ -21,38 +21,13 @@ module CPU(
 	`InsnAddrPath pcIn;
 	logic pcWrEnable;
 
-	//IMem
-	`InsnPath imemInsnCode;
-
-	//Decoder
-	`OpPath dcOp;
-	`RegNumPath dcRS;
-	`RegNumPath dcRT;
-	`RegNumPath dcRD;
-	`ShamtPath dcShamt;
-	`FunctPath dcFunct;
-	`ConstantPath dcConstant;
-	`ALUCodePath dcALUCode;
-	`BrCodePath dcBrCode;
-	logic dcIsSrcA_Rt;
-	logic dcIsDstRt;
-	logic dcIsALUInConstant;
-	logic dcIsLoadInsn;
-	logic dcIsStoreInsn;
-
 	//Register files
-	`DataPath rfRdDataS;
-	`DataPath rfRdDataT;
 	`DataPath rfWrData;
-	`RegNumPath rfWrNum;
-	logic rfWrEnable;
 
 	//ALU
 	`DataPath aluOut;
 	`DataPath aluInA;
 	`DataPath aluInB;
-
-	logic brTaken;
 
 	//hazard detection
 	logic cHazard;
@@ -84,7 +59,6 @@ module CPU(
 	`DataPath idexRdDataBIn;
 
 
-
 	`InsnAddrPath idexInsnOut;
 	`RegNumPath idexRSOut;
 	`RegNumPath idexRTOut;
@@ -100,11 +74,59 @@ module CPU(
 	logic idexIsStoreInsnOut;
 	logic idexIsSrcA_RtOut;
 	logic idexIsDstRtOut;
-	logic idexRfWrEnableout;
+	logic idexRfWrEnableOut;
 	logic idexIsALUInConstantOut;
 
 	`DataPath idexRdDataAOut;
 	`DataPath idexRdDataBOut;
+
+	//exmem
+	`InsnAddrPath exmemInsnIn;
+	`DataPath exmemALUOutIn;
+	`BrCodePath exmemBrCodeIn;
+	logic exmemIsDstRtIn;
+	logic exmemRfWrEnableIn;
+	logic exmemIsStoreInsnIn;
+	logic exmemIsLoadInsnIn;
+	logic exmemPcWrEnableIn;
+
+	`DataPath exmemRdDataAIn;
+	`DataPath exmemRdDataBIn;
+	`ConstantPath exmemConstantIn;
+	`RegNumPath exmemWrNumIn;
+	`RegNumPath exmemRSIn;
+	`RegNumPath exmemRTIn;
+	`RegNumPath exmemRDIn;
+
+	`InsnAddrPath exmemInsnOut;
+	`DataPath exmemALUOutOut;
+	`BrCodePath exmemBrCodeOut;
+	logic exmemIsDstRtOut;
+	logic exmemRfWrEnableOut;
+	logic exmemIsStoreInsnOut;
+	logic exmemIsLoadInsnOut;
+	logic exmemPcWrEnableOut;
+
+	`DataPath exmemRdDataAOut;
+	`DataPath exmemRdDataBOut;
+	`ConstantPath exmemConstantOut;
+	`RegNumPath exmemWrNumOut;
+	`RegNumPath exmemRSOut;
+	`RegNumPath exmemRTOut;
+	`RegNumPath exmemRDOut;
+
+	//memwb
+	`DataPath memwbAluOutIn;
+	`RegNumPath memwbWrNumIn;
+	logic memwbIsLoadInsnIn;
+	logic memwbRfWrEnableIn;
+
+	`DataPath memwbDataOut;
+	`DataPath memwbAluOutOut;
+	`RegNumPath memwbWrNumOut;
+	logic memwbIsLoadInsnOut;
+	logic memwbRfWrEnableOut;
+
 
 	IFID ifid(
 		//common
@@ -156,7 +178,7 @@ module CPU(
 		.idexIsLoadInsnOut,
 		.idexIsStoreInsnOut,
 		.idexIsSrcA_RtOut,
-		.idexRfWrEnableout,
+		.idexRfWrEnableOut,
 		.idexIsALUInConstantOut,
 		.idexBrCodeOut,
 		.idexALUCodeOut,
@@ -173,11 +195,61 @@ module CPU(
 	);
 
 	EXMEM exmem(
+		.clk,
+		.rst,
+		.cHazard,
 
+		.exmemInsnIn,
+		.exmemALUOutIn,
+		.exmemBrCodeIn,
+		.exmemIsDstRtIn,
+		.exmemRfWrEnableIn,
+		.exmemIsStoreInsnIn,
+		.exmemIsLoadInsnIn,
+		.exmemPcWrEnableIn,
+
+		.exmemRdDataAIn,
+		.exmemRdDataBIn,
+		.exmemConstantIn,
+		.exmemWrNumIn,
+		.exmemRSIn,
+		.exmemRTIn,
+		.exmemRDIn,
+
+		.exmemInsnOut,
+		.exmemALUOutOut,
+		.exmemBrCodeOut,
+		.exmemIsDstRtOut,
+		.exmemRfWrEnableOut,
+		.exmemIsStoreInsnOut,
+		.exmemIsLoadInsnOut,
+		.exmemPcWrEnableOut,
+
+		.exmemRdDataAOut,
+		.exmemRdDataBOut,
+		.exmemConstantOut,
+		.exmemWrNumOut,
+		.exmemRSOut,
+		.exmemRTOut,
+		.exmemRDOut,
 	);
 
-	MEMWB(
 
+	MEMWB(
+		.clk,
+		.rst,
+
+		.dataIn,
+		.memwbAluOutIn,
+		.memwbWrNumIn,
+		.memwbIsLoadInsnIn,
+		.memwbRfWrEnableIn,
+
+		.memwbDataOut,
+		.memwbAluOutOut,
+		.memwbWrNumOut,
+		.memwbIsLoadInsnOut,
+		.memwbRfWrEnableOut,
 	);
 
 	Decoder decoder(
@@ -205,20 +277,20 @@ module CPU(
 
 
 	PC pc(
-		.addrOut ( pcOut ),
-		.clk ( clk ),
-		.rst ( rst ),
-		.addrIn ( pcIn ),
-		.wrEnable ( pcWrEnable )
+		.pcOut,
+		.clk
+		.rst
+		.pcIn,
+		.exmemPcWrEnableOut,
 	);
 
 	BranchUnit branch(
-		.pcOut ( pcIn ),
-		.pcIn ( pcOut ),
-		.brCode ( dcBrCode ),
-		.regRS ( rfRdDataS ),
-		.regRT ( rfRdDataT ),
-		.constant ( dcConstant )
+		.pcOut,
+		.pcIn,
+		.exmemBrCodeOut,
+		.exmemRdDataAOut,
+		.exmemRdDataBOut,
+		.exmemConstantOut,
 	);
 
 	RegisterFile regFile(
@@ -230,36 +302,51 @@ module CPU(
 		.idexRSIn,
 		.idexRTIn,
 
-		.wrData ( rfWrData ),
-		.wrNum ( rfWrNum ),
-		.wrEnable ( rfWrEnable )
+		.rfWrData,
+		.memwbWrNumOut,
+		.memwbRfWrEnableOut,
 	);
 
 	ALU alu(
-		.aluOut ( aluOut ),
+		.exmemALUOutIn,
 		
-		.aluInA ( aluInA ),
-		.aluInB ( aluInB ),
-		.code ( dcALUCode )
+		.aluInA,
+		.aluInB,
+		.idexALUCodeOut
 	);
 
 	always_comb begin
 		cHazard = `FALSE;
 
+		//directly forwarding between pipeline registers
 		idexInsnIn = ifidInsnOut;
 
+		exmemInsnIn = idexInsnOut;
+		exmemBrCodeIn = idexBrCodeOut;
+		exmemIsDstRtIn = idexIsDstRtOut;
+		exmemRfWrEnableIn = idexRfWrEnableOut;
+		exmemIsStoreInsnIn = idexIsStoreInsnOut;
+		exmemIsLoadInsnIn = idexIsLoadInsnOut;
+		exmemPcWrEnableIn = idexPcWrEnableOut;
 
-		imemInsnCode = insn;
+		exmemRdDataAIn = idexRdDataAOut;
+		exmemRdDataBIn = idexRdDataBOut;
+		exmemConstantIn = idexConstatnOut;
+		exmemRSIn = idexRSOut;
+		exmemRTIn = idexRTOut;
+		exmemRDIn = idexRDOut;
+
+
 		insnAddr = pcOut;
 
-		dataOut = rfRdDataT;
-		dataAddr = rfRdDataS[ `DATA_ADDR_WIDTH - 1 : 0 ] + `EXPAND_ADDRESS( dcConstant );
+		dataOut = exmemRdDataBOut;
+		dataAddr = exmemRdDataAOut[ `DATA_ADDR_WIDTH - 1 : 0 ] + `EXPAND_ADDRESS( exmemConstantOut );
 
-		rfWrData = dcIsLoadInsn ? dataIn : aluOut;
-		rfWrNum = dcIsDstRt ? dcRT : dcRD;
+		rfWrData = memwbIsLoadInsnOut ? memwbDataOut : memwbAluOutOut;
+		exmemWrNumIn = idexIsDstRtOut ? idexRTOut : idexRDOut;
 
-		aluInA = dcIsSrcA_Rt ? rfRdDataT : rfRdDataS;
-		aluInB = dcIsALUInConstant ? dcConstant : rfRdDataT;
+		aluInA = idexIsSrcA_RtOut ? idexRdDataBOut : idexRdDataAOut;
+		aluInB = idexIsALUInConstantOut ? idexConstatnOut : idexRdDataBOut;
 
 		dataWrEnable = dcIsStoreInsn;
 	end
