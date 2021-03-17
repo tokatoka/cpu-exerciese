@@ -28,9 +28,11 @@ SOURCES = \
 	MainSim.v \
 	PC.v \
 	RegFile.v \
-	Types.v \
-
-
+	IFID.v \
+	IDEX.v \
+	EXMEM.v \
+	MEMWB.v	\
+	Types.v
 
 DEPS = \
 	$(SOURCES) \

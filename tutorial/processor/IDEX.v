@@ -1,11 +1,11 @@
-`include "Types.h"
+`include "Types.v"
 
-module PC(
+module IDEX(
     input logic clk,
     input logic rst,
     input logic cHazard,
 
-    input `InsnAddrPath PCAddrIn;
+    input `InsnAddrPath PCAddrIn,
 
     input logic IsDstRtIn,
     input logic PcWrEnableIn,
@@ -49,12 +49,12 @@ module PC(
 
     output `RegNumPath RSOut,
     output `RegNumPath RTOut,
-    output `RegNumPath RDOut,
-)
+    output `RegNumPath RDOut
+);
 
     always_ff @(posedge clk or negedge rst) begin
-        if(cHazard or !rst) begin
-            PCAddrIn <= `InsnAddrPath'h0;
+        if(cHazard || !rst) begin
+            PCAddrOut <= `INSN_ADDR_WIDTH'h0;
 
             IsDstRtOut <= `FALSE;
             PcWrEnableOut <= `FALSE;
@@ -64,16 +64,16 @@ module PC(
             RfWrEnableOut <= `FALSE;
             IsALUInConstantOut <= `FALSE;
 
-            BrCodeOut <= `BrCodePath'h0;
-            AluCodeOut <= `ALUCodePath'h0;
-            ShamtOut <= `ShamtPath'h0;
-            FunctOut <= `FunctPath'h0;
-            RdDataAOut <= `DataPath'h0;
-            RdDataBOut <= `DataPath'h0;
-            ConstantOut <= `ConstantPath'h0;
-            RSOut <= `RegNumPath'h0;
-            RTOut <= `RegNumPath'h0;
-            RDOut <= `RegNumPath'h0;
+            BrCodeOut <= `BR_CODE_WIDTH'h0;
+            AluCodeOut <= `ALU_CODE_WIDTH'h0;
+            ShamtOut <= `SHAMT_WIDTH'h0;
+            FunctOut <= `FUNCT_WIDTH'h0;
+            RdDataAOut <= `DATA_WIDTH'h0;
+            RdDataBOut <= `DATA_WIDTH'h0;
+            ConstantOut <= `CONSTANT_WIDTH'h0;
+            RSOut <= `REG_NUM_WIDTH'h0;
+            RTOut <= `REG_NUM_WIDTH'h0;
+            RDOut <= `REG_NUM_WIDTH'h0;
         end
         else begin
             PCAddrOut <= PCAddrIn;

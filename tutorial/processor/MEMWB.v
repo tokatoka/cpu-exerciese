@@ -1,4 +1,4 @@
-include "Types.h"
+`include "Types.v"
 
 module MEMWB(
     input logic clk,
@@ -16,14 +16,14 @@ module MEMWB(
 
     output `RegNumPath WrNumOut,
     output logic IsLoadInsnOut,
-    output logic RfWrEnableOut,
-)
+    output logic RfWrEnableOut
+);
 
     always_ff @(posedge clk or negedge rst) begin
         if(!rst) begin
-            RdDataMemOut <= `DataPath'h0;
-            AluOutOut <= `DataPath'h0;
-            WrNumOut <= `RegNumPath'h0;
+            RdDataMemOut <= `DATA_WIDTH'h0;
+            AluOutOut <= `DATA_WIDTH'h0;
+            WrNumOut <= `REG_NUM_WIDTH'h0;
 
             IsLoadInsnOut <= `FALSE;
             RfWrEnableOut <= `FALSE;
@@ -34,7 +34,7 @@ module MEMWB(
             WrNumOut <= WrNumIn;
 
             IsLoadInsnOut <= IsLoadInsnIn;
-            RfWrEnableOut <= RdWrEnableIn;
+            RfWrEnableOut <= RfWrEnableIn;
         end
     end
 

@@ -141,6 +141,7 @@ module CPU(
 		.ifidInsnOut
 	);
 
+
 	IDEX idex(
 		//common
 		.clk,
@@ -235,7 +236,7 @@ module CPU(
 	);
 
 
-	MEMWB(
+	MEMWB memwb(
 		.clk,
 		.rst,
 

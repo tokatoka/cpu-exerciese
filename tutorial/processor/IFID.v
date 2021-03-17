@@ -1,26 +1,25 @@
-`include "Types.h"
+`include "Types.v"
 
-module IFED(
+module IFID(
     input logic clk,
     input logic rst,
-    input logic cHazard;
+    input logic cHazard,
 
-    
     input `InsnAddrPath PCAddrIn,
     input `InsnPath InsnIn,
 
     output `InsnAddrPath PCAddrOut,
-    output `InsnPath InsnOut,
-)
+    output `InsnPath InsnOut
+);
 
     always_ff @(posedge clk or negedge rst) begin
-        if(cHazard or !rst) begin
-            PCAddrOut = `InsnAddrPath'h0;
-            InsnOut = `InsnPath'h0;
+        if(cHazard || !rst) begin
+            PCAddrOut <= `INSN_ADDR_WIDTH'h0;
+            InsnOut <= `INSN_WIDTH'h0;
         end
         else begin
-            PCInsnOut = PCAddrIn;
-            InsnOut = InsnIn;
+            PCAddrOut <= PCAddrIn;
+            InsnOut <= InsnIn;
         end
     end
 
