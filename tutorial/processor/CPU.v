@@ -36,7 +36,7 @@ module CPU(
 	`InsnPath ifidInsnOut;
 
 	//idex
-	`InsnAddrPath idexInsnIn;
+	`InsnAddrPath idexPCAddrIn;
 	`OpPath idexOpIn;
 	`RegNumPath idexRSIn;
 	`RegNumPath idexRTIn;
@@ -59,7 +59,7 @@ module CPU(
 	`DataPath idexRdDataBIn;
 
 
-	`InsnAddrPath idexInsnOut;
+	`InsnAddrPath idexPCAddrOut;
 	`RegNumPath idexRSOut;
 	`RegNumPath idexRTOut;
 	`RegNumPath idexRDOut;
@@ -81,7 +81,7 @@ module CPU(
 	`DataPath idexRdDataBOut;
 
 	//exmem
-	`InsnAddrPath exmemInsnIn;
+	`InsnAddrPath exmemPCAddrIn;
 	`DataPath exmemALUOutIn;
 	`BrCodePath exmemBrCodeIn;
 	logic exmemIsDstRtIn;
@@ -98,7 +98,7 @@ module CPU(
 	`RegNumPath exmemRTIn;
 	`RegNumPath exmemRDIn;
 
-	`InsnAddrPath exmemInsnOut;
+	`InsnAddrPath exmemPCAddrOut;
 	`DataPath exmemALUOutOut;
 	`BrCodePath exmemBrCodeOut;
 	logic exmemIsDstRtOut;
@@ -149,7 +149,7 @@ module CPU(
 		cHazard,
 
 		//input
-		idexInsnIn,
+		idexPCAddrIn,
 	
 		idexIsDstRtIn,
 		idexPcWrEnableIn,
@@ -172,7 +172,7 @@ module CPU(
 		idexRDIn,
 
 		//output
-		idexInsnOut,
+		idexPCAddrOut,
 
 		idexIsDstRtOut,
 		idexPcWrEnableOut,
@@ -200,7 +200,7 @@ module CPU(
 		rst,
 		cHazard,
 
-		exmemInsnIn,
+		exmemPCAddrIn,
 		exmemALUOutIn,
 		exmemBrCodeIn,
 		exmemIsDstRtIn,
@@ -217,7 +217,7 @@ module CPU(
 		exmemRTIn,
 		exmemRDIn,
 
-		exmemInsnOut,
+		exmemPCAddrOut,
 		exmemALUOutOut,
 		exmemBrCodeOut,
 		exmemIsDstRtOut,
@@ -325,9 +325,9 @@ module CPU(
 		cHazard = `FALSE;
 
 		//directly forwarding between pipeline registers
-		idexInsnIn = ifidInsnOut;
+		idexPCAddrIn = ifidPCAddrOut;
 
-		exmemInsnIn = idexInsnOut;
+		exmemPCAddrIn = idexPCAddrOut;
 		exmemBrCodeIn = idexBrCodeOut;
 		exmemIsDstRtIn = idexIsDstRtOut;
 		exmemRfWrEnableIn = idexRfWrEnableOut;
