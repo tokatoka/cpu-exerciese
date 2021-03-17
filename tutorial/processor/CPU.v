@@ -54,9 +54,158 @@ module CPU(
 
 	logic brTaken;
 
+	//hazard detection
+	logic cHazard;
+	//ifid
+	logic `InsnAddrPath ifidPCAddrOut;
+	logic `InsnPath ifidInsnOut;
+
+	//idex
+	`InsnAddrPath idexInsnIn;
+	`OpPath idexOpIn;
+	`RegNumPath idexRSIn;
+	`RegNumPath idexRTIn;
+	`RegNumPath idexRDIn;
+	`ShamtPath idexShamtIn;
+	`FunctPath idexFunctIn;
+	`ConstantPath idexConstatnIn;
+	`ALUCodePath idexALUCodeIn;
+	`BrCodePath idexBrCodeIn;
+
+	logic idexPcWrEnableIn;
+	logic idexIsLoadInsnIn;
+	logic idexIsStoreInsnIn;
+	logic idexIsSrcA_RtIn;
+	logic idexIsDstRtIn;
+	logic idexRfWrEnableIn;
+	logic idexIsALUInConstantIn;
+
+	`DataPath idexRdDataAIn;
+	`DataPath idexRdDataBIn;
+
+
+
+	`InsnAddrPath idexInsnOut;
+	`RegNumPath idexRSOut;
+	`RegNumPath idexRTOut;
+	`RegNumPath idexRDOut;
+	`ShamtPath idexShamtOut;
+	`FunctPath idexFunctOut;
+	`ConstantPath idexConstatnOut;
+	`ALUCodePath idexALUCodeOut;
+	`BrCodePath idexBrCodeOut;
+
+	logic idexPcWrEnableOut;
+	logic idexIsLoadInsnOut;
+	logic idexIsStoreInsnOut;
+	logic idexIsSrcA_RtOut;
+	logic idexIsDstRtOut;
+	logic idexRfWrEnableout;
+	logic idexIsALUInConstantOut;
+
+	`DataPath idexRdDataAOut;
+	`DataPath idexRdDataBOut;
+
+	IFID ifid(
+		//common
+		.clk,
+		.rst,
+		.cHazard,
+		//input
+		.pcOut,
+		.insn,
+		//output
+		.ifidPCAddrOut,
+		.ifidInsnOut,
+	);
+
+	IDEX idex(
+		//common
+		.clk,
+		.rst,
+		.cHazard,
+
+		//input
+		.idexInsnIn,
+		
+		.idexIsDstRtIn,
+		.idexPcWrEnableIn,
+		.idexIsLoadInsnIn,
+		.idexIsStoreInsnIn,
+		.idexIsSrcA_RtIn,
+		.idexRfWrEnableIn,
+		.idexIsALUInConstantIn,
+		.idexBrCodeIn,
+		.idexALUCodeIn,
+
+		.idexShamtIn,
+		.idexFunctIn,
+		.idexRdDataAIn,
+		.idexRdDataBIn,
+		.idexConstatnIn,
+
+		.idexRSIn,
+		.idexRTIn,
+		.idexRDIn,
+
+		//output
+		.idexInsnOut,
+
+		.idexIsDstRtOut,
+		.idexPcWrEnableOut,
+		.idexIsLoadInsnOut,
+		.idexIsStoreInsnOut,
+		.idexIsSrcA_RtOut,
+		.idexRfWrEnableout,
+		.idexIsALUInConstantOut,
+		.idexBrCodeOut,
+		.idexALUCodeOut,
+
+		.idexShamtOut,
+		.idexFunctOut,
+		.idexRdDataAOut,
+		.idexRdDataBOut,
+		.idexConstantOut,
+
+		.idexRSOut,
+		.idexRTOut,
+		.idexRDOut,
+	);
+
+	EXMEM exmem(
+
+	);
+
+	MEMWB(
+
+	);
+
+	Decoder decoder(
+		.idexOpIn,
+		.idexRSIn,
+		.idexRTIn,
+		.idexRDIn,
+		.idexShamtIn,
+		.idexFunctIn,
+		.idexConstatnIn,
+		.idexALUCodeIn,
+		.idexBrCodeIn,
+		
+		.idexPcWrEnableIn,
+		.idexIsLoadInsnIn,
+		.idexIsStoreInsnIn,
+		.idexIsSrcA_RtIn,
+		.idexIsDstRtIn,
+		.idexRfWrEnableIn,
+		.idexIsALUInConstantIn,
+
+		.ifidInsnOut
+	);
+
+
+
 	PC pc(
 		.addrOut ( pcOut ),
-
 		.clk ( clk ),
 		.rst ( rst ),
 		.addrIn ( pcIn ),
@@ -72,34 +221,15 @@ module CPU(
 		.constant ( dcConstant )
 	);
 
-	Decoder decoder(
-		.op ( dcOp ),
-		.rs ( dcRS ),
-		.rt ( dcRT ),
-		.rd ( dcRD ),
-		.shamt ( dcShamt ),
-		.funct ( dcFunct ),
-		.constant ( dcConstant ),
-		.aluCode ( dcALUCode ),
-		.brCode ( dcBrCode ),
-		.pcWrEnable ( pcWrEnable ),
-		.isLoadInsn ( dcIsLoadInsn ),
-		.isStoreInsn ( dcIsStoreInsn ),
-		.isSrcA_Rt ( dcIsSrcA_Rt ),
-		.isDstRt ( dcIsDstRt ),
-		.rfWrEnable ( rfWrEnable ),
-		.isALUInConstant ( dcIsALUInConstant ),
-
-		.insn ( imemInsnCode )
-	);
-
 	RegisterFile regFile(
-		.rdDataA ( rfRdDataS ),
-		.rdDataB ( rfRdDataT ),
+		.clk,
 
-		.clk ( clk ),
-		.rdNumA ( dcRS ),
-		.rdNumB ( dcRT ),
+		.idexRdDataAIn,
+		.idexRdDataBIn,
+
+		.idexRSIn,
+		.idexRTIn,
+
 		.wrData ( rfWrData ),
 		.wrNum ( rfWrNum ),
 		.wrEnable ( rfWrEnable )
@@ -114,6 +244,11 @@ module CPU(
 	);
 
 	always_comb begin
+		cHazard = `FALSE;
+
+		idexInsnIn = ifidInsnOut;
+
+
 		imemInsnCode = insn;
 		insnAddr = pcOut;
 
