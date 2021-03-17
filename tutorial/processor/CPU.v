@@ -253,7 +253,7 @@ module CPU(
 		memwbRfWrEnableOut,
 		memwbRSOut,
 		memwbRTOut,
-		memwbRDOut,
+		memwbRDOut
 	);
 
 	Decoder decoder(

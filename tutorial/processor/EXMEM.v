@@ -9,7 +9,6 @@ module EXMEM(
     input `DataPath ALUOutIn,
     input `BrCodePath BrCodeIn,
 
-    input logic IsDstRtIn,    
     input logic RfWrEnableIn,
     input logic IsStoreInsnIn,
     input logic IsLoadInsnIn,
@@ -29,7 +28,6 @@ module EXMEM(
     output `DataPath ALUOutOut,
     output `BrCodePath BrCodeOut,
 
-    output logic IsDstRtOut,    
     output logic RfWrEnableOut,
     output logic IsStoreInsnOut,
     output logic IsLoadInsnOut,
@@ -50,7 +48,6 @@ module EXMEM(
             PCAddrOut <= `INSN_ADDR_WIDTH'h0;
             ALUOutOut <= `DATA_WIDTH'h0;
             BrCodeOut <= `BR_CODE_WIDTH'h0;
-            IsDstRtOut <= `FALSE;
             RfWrEnableOut <= `FALSE;
             IsStoreInsnOut <= `FALSE;
             IsLoadInsnOut <= `FALSE;
@@ -69,7 +66,6 @@ module EXMEM(
             PCAddrOut <= PCAddrIn;
             ALUOutOut <= PCAddrIn;
             BrCodeOut <= BrCodeIn;
-            IsDstRtOut <= IsDstRtIn;
             RfWrEnableOut <= RfWrEnableIn;
             IsStoreInsnOut <= IsStoreInsnIn;
             IsLoadInsnOut <= IsLoadInsnIn;
