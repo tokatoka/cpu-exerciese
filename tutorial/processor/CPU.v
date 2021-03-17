@@ -35,14 +35,16 @@ module CPU(
 	`InsnAddrPath ifidPCAddrOut;
 	`InsnPath ifidInsnOut;
 
+	//dead variable
+	`OpPath idexOpIn;
+	`ShamtPath idexShamtIn;
+	`FunctPath idexFunctIn;
+
 	//idex
 	`InsnAddrPath idexPCAddrIn;
-	`OpPath idexOpIn;
 	`RegNumPath idexRSIn;
 	`RegNumPath idexRTIn;
 	`RegNumPath idexRDIn;
-	`ShamtPath idexShamtIn;
-	`FunctPath idexFunctIn;
 	`ConstantPath idexConstatnIn;
 	`ALUCodePath idexALUCodeIn;
 	`BrCodePath idexBrCodeIn;
@@ -63,8 +65,6 @@ module CPU(
 	`RegNumPath idexRSOut;
 	`RegNumPath idexRTOut;
 	`RegNumPath idexRDOut;
-	`ShamtPath idexShamtOut;
-	`FunctPath idexFunctOut;
 	`ConstantPath idexConstantOut;
 	`ALUCodePath idexALUCodeOut;
 	`BrCodePath idexBrCodeOut;
@@ -161,8 +161,6 @@ module CPU(
 		idexBrCodeIn,
 		idexALUCodeIn,
 
-		idexShamtIn,
-		idexFunctIn,
 		idexRdDataAIn,
 		idexRdDataBIn,
 		idexConstatnIn,
@@ -184,8 +182,6 @@ module CPU(
 		idexBrCodeOut,
 		idexALUCodeOut,
 
-		idexShamtOut,
-		idexFunctOut,
 		idexRdDataAOut,
 		idexRdDataBOut,
 		idexConstantOut,

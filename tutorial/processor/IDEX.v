@@ -17,9 +17,6 @@ module IDEX(
     input `BrCodePath BrCodeIn,
     input `ALUCodePath AluCodeIn,
 
-    input `ShamtPath ShamtIn,
-    input `FunctPath FunctIn,
-
     input `DataPath RdDataAIn,
     input `DataPath RdDataBIn,
     input `ConstantPath ConstantIn,
@@ -39,9 +36,6 @@ module IDEX(
     output logic IsALUInConstantOut,
     output `BrCodePath BrCodeOut,
     output `ALUCodePath AluCodeOut,
-
-    output `ShamtPath ShamtOut,
-    output `FunctPath FunctOut,
 
     output `DataPath RdDataAOut,
     output `DataPath RdDataBOut,
@@ -66,8 +60,6 @@ module IDEX(
 
             BrCodeOut <= `BR_CODE_WIDTH'h0;
             AluCodeOut <= `ALU_CODE_WIDTH'h0;
-            ShamtOut <= `SHAMT_WIDTH'h0;
-            FunctOut <= `FUNCT_WIDTH'h0;
             RdDataAOut <= `DATA_WIDTH'h0;
             RdDataBOut <= `DATA_WIDTH'h0;
             ConstantOut <= `CONSTANT_WIDTH'h0;
@@ -88,8 +80,6 @@ module IDEX(
 
             BrCodeOut <= BrCodeIn;
             AluCodeOut <= AluCodeIn;
-            ShamtOut <= ShamtIn;
-            FunctOut <= FunctIn;
             RdDataAOut <= RdDataAIn;
             RdDataBOut <= RdDataBIn;
             ConstantOut <= ConstantIn;
