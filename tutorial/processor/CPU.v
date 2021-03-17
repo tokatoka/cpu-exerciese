@@ -337,7 +337,7 @@ module CPU(
 		exmemRDIn = idexRDOut;
 
 
-		insnAddr = pcOut;
+		insnAddr = pcIn;
 
 		dataOut = exmemRdDataBOut;
 		dataAddr = exmemRdDataAOut[ `DATA_ADDR_WIDTH - 1 : 0 ] + `EXPAND_ADDRESS( exmemConstantOut );

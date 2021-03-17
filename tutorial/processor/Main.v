@@ -82,7 +82,7 @@ module Main(
 
 	// IMem
 	IMem imem( 
-		clkX4, 			// メモリは4倍速
+		clk, 			// メモリは4倍速
 		rst,
 		imemDataToCPU,
 		imemAddr
