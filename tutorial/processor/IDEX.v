@@ -28,7 +28,7 @@ module PC(
     input `RegNumPath idexRTIn,
     input `RegNumPath idexRDIn,
 
-    output `InsnAddrPath idexPCAddrOut;
+    output `InsnAddrPath idexPCAddrOut,
     output logic idexIsDstRtOut,
     output logic idexPcWrEnableOut,
     output logic idexIsLoadInsnOut,
