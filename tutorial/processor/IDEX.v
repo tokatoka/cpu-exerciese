@@ -5,6 +5,8 @@ module PC(
     input logic rst,
     input logic cHazard,
 
+    input `InsnAddrPath idexPCAddrIn;
+
     input logic idexIsDstRtIn,
     input logic idexPcWrEnableIn,
     input logic idexIsLoadInsnIn,
@@ -26,6 +28,7 @@ module PC(
     input `RegNumPath idexRTIn,
     input `RegNumPath idexRDIn,
 
+    output `InsnAddrPath idexPCAddrOut;
     output logic idexIsDstRtOut,
     output logic idexPcWrEnableOut,
     output logic idexIsLoadInsnOut,
@@ -50,6 +53,8 @@ module PC(
 
     always_ff @(posedge clk or negedge rst) begin
         if(cHazard) begin
+            idexPCAddrIn <= `InsnAddrPath'h0;
+
             idexIsDstRtOut <= `FALSE;
             idexPcWrEnableOut <= `FALSE;
             idexIsLoadInsnOut <= `FALSE;
@@ -70,6 +75,8 @@ module PC(
             idexRDOut <= `RegNumPath'h0;
         end
         else begin
+            idexPCAddrOut <= idexPCAddrIn;
+
             idexIsDstRtOut <= idexIsDstRtIn;
             idexPcWrEnableOut <= idexPcWrEnableIn;
             idexIsLoadInsnOut <= idexIsLoadInsnIn;

@@ -5,15 +5,21 @@ module IFED(
     input logic rst,
     input logic cHazard;
 
-    input `InsnAddrPath ifidInsnIn,
-    output `InsnAddrPath ifidInsnOut,
+    
+    input `InsnAddrPath ifidPCAddrIn,
+    input `InsnPath ifidInsnIn,
+
+    output `InsnAddrPath ifidPCAddrOut,
+    output `InsnPath ifidInsnOut,
 )
 
     always_ff @(posedge clk or negedge rst) begin
         if(cHazard) begin
-            ifidInsnOut = `InsnAddrPath'h0;
+            ifidPCAddrOut = `InsnAddrPath'h0;
+            ifidInsnOut = `InsnPath'h0;
         end
         else begin
+            ifidPCInsnOut = ifidPCAddrIn;
             ifidInsnOut = ifidInsnIn;
         end
     end
