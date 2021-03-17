@@ -130,190 +130,195 @@ module CPU(
 
 	IFID ifid(
 		//common
-		.clk,
-		.rst,
-		.cHazard,
+		clk,
+		rst,
+		cHazard,
 		//input
-		.pcOut,
-		.insn,
+		pcOut,
+		insn,
 		//output
-		.ifidPCAddrOut,
-		.ifidInsnOut
+		ifidPCAddrOut,
+		ifidInsnOut
 	);
 
 
 	IDEX idex(
 		//common
-		.clk,
-		.rst,
-		.cHazard,
+		clk,
+		rst,
+		cHazard,
 
 		//input
-		.idexInsnIn,
-		
-		.idexIsDstRtIn,
-		.idexPcWrEnableIn,
-		.idexIsLoadInsnIn,
-		.idexIsStoreInsnIn,
-		.idexIsSrcA_RtIn,
-		.idexRfWrEnableIn,
-		.idexIsALUInConstantIn,
-		.idexBrCodeIn,
-		.idexALUCodeIn,
+		idexInsnIn,
+	
+		idexIsDstRtIn,
+		idexPcWrEnableIn,
+		idexIsLoadInsnIn,
+		idexIsStoreInsnIn,
+		idexIsSrcA_RtIn,
+		idexRfWrEnableIn,
+		idexIsALUInConstantIn,
+		idexBrCodeIn,
+		idexALUCodeIn,
 
-		.idexShamtIn,
-		.idexFunctIn,
-		.idexRdDataAIn,
-		.idexRdDataBIn,
-		.idexConstatnIn,
+		idexShamtIn,
+		idexFunctIn,
+		idexRdDataAIn,
+		idexRdDataBIn,
+		idexConstatnIn,
 
-		.idexRSIn,
-		.idexRTIn,
-		.idexRDIn,
+		idexRSIn,
+		idexRTIn,
+		idexRDIn,
 
 		//output
-		.idexInsnOut,
+		idexInsnOut,
 
-		.idexIsDstRtOut,
-		.idexPcWrEnableOut,
-		.idexIsLoadInsnOut,
-		.idexIsStoreInsnOut,
-		.idexIsSrcA_RtOut,
-		.idexRfWrEnableOut,
-		.idexIsALUInConstantOut,
-		.idexBrCodeOut,
-		.idexALUCodeOut,
+		idexIsDstRtOut,
+		idexPcWrEnableOut,
+		idexIsLoadInsnOut,
+		idexIsStoreInsnOut,
+		idexIsSrcA_RtOut,
+		idexRfWrEnableOut,
+		idexIsALUInConstantOut,
+		idexBrCodeOut,
+		idexALUCodeOut,
 
-		.idexShamtOut,
-		.idexFunctOut,
-		.idexRdDataAOut,
-		.idexRdDataBOut,
-		.idexConstantOut,
+		idexShamtOut,
+		idexFunctOut,
+		idexRdDataAOut,
+		idexRdDataBOut,
+		idexConstantOut,
 
-		.idexRSOut,
-		.idexRTOut,
-		.idexRDOut
+		idexRSOut,
+		idexRTOut,
+		idexRDOut
 	);
 
 	EXMEM exmem(
-		.clk,
-		.rst,
-		.cHazard,
+		clk,
+		rst,
+		cHazard,
 
-		.exmemInsnIn,
-		.exmemALUOutIn,
-		.exmemBrCodeIn,
-		.exmemIsDstRtIn,
-		.exmemRfWrEnableIn,
-		.exmemIsStoreInsnIn,
-		.exmemIsLoadInsnIn,
-		.exmemPcWrEnableIn,
+		exmemInsnIn,
+		exmemALUOutIn,
+		exmemBrCodeIn,
+		exmemIsDstRtIn,
+		exmemRfWrEnableIn,
+		exmemIsStoreInsnIn,
+		exmemIsLoadInsnIn,
+		exmemPcWrEnableIn,
 
-		.exmemRdDataAIn,
-		.exmemRdDataBIn,
-		.exmemConstantIn,
-		.exmemWrNumIn,
-		.exmemRSIn,
-		.exmemRTIn,
-		.exmemRDIn,
+		exmemRdDataAIn,
+		exmemRdDataBIn,
+		exmemConstantIn,
+		exmemWrNumIn,
+		exmemRSIn,
+		exmemRTIn,
+		exmemRDIn,
 
-		.exmemInsnOut,
-		.exmemALUOutOut,
-		.exmemBrCodeOut,
-		.exmemIsDstRtOut,
-		.exmemRfWrEnableOut,
-		.exmemIsStoreInsnOut,
-		.exmemIsLoadInsnOut,
-		.exmemPcWrEnableOut,
+		exmemInsnOut,
+		exmemALUOutOut,
+		exmemBrCodeOut,
+		exmemIsDstRtOut,
+		exmemRfWrEnableOut,
+		exmemIsStoreInsnOut,
+		exmemIsLoadInsnOut,
+		exmemPcWrEnableOut,
 
-		.exmemRdDataAOut,
-		.exmemRdDataBOut,
-		.exmemConstantOut,
-		.exmemWrNumOut,
-		.exmemRSOut,
-		.exmemRTOut,
-		.exmemRDOut
+		exmemRdDataAOut,
+		exmemRdDataBOut,
+		exmemConstantOut,
+		exmemWrNumOut,
+		exmemRSOut,
+		exmemRTOut,
+		exmemRDOut
 	);
 
 
 	MEMWB memwb(
-		.clk,
-		.rst,
+		clk,
+		rst,
 
-		.dataIn,
-		.memwbAluOutIn,
-		.memwbWrNumIn,
-		.memwbIsLoadInsnIn,
-		.memwbRfWrEnableIn,
+		dataIn,
+		memwbAluOutIn,
+		memwbWrNumIn,
+		memwbIsLoadInsnIn,
+		memwbRfWrEnableIn,
 
-		.memwbDataOut,
-		.memwbAluOutOut,
-		.memwbWrNumOut,
-		.memwbIsLoadInsnOut,
-		.memwbRfWrEnableOut
+		memwbDataOut,
+		memwbAluOutOut,
+		memwbWrNumOut,
+		memwbIsLoadInsnOut,
+		memwbRfWrEnableOut
 	);
 
 	Decoder decoder(
-		.idexOpIn,
-		.idexRSIn,
-		.idexRTIn,
-		.idexRDIn,
-		.idexShamtIn,
-		.idexFunctIn,
-		.idexConstatnIn,
-		.idexALUCodeIn,
-		.idexBrCodeIn,
-		
-		.idexPcWrEnableIn,
-		.idexIsLoadInsnIn,
-		.idexIsStoreInsnIn,
-		.idexIsSrcA_RtIn,
-		.idexIsDstRtIn,
-		.idexRfWrEnableIn,
-		.idexIsALUInConstantIn,
+		idexOpIn,
+		idexRSIn,
+		idexRTIn,
+		idexRDIn,
+		idexShamtIn,
+		idexFunctIn,
+		idexConstatnIn,
+		idexALUCodeIn,
+		idexBrCodeIn,
+	
+		idexPcWrEnableIn,
+		idexIsLoadInsnIn,
+		idexIsStoreInsnIn,
+		idexIsSrcA_RtIn,
+		idexIsDstRtIn,
+		idexRfWrEnableIn,
+		idexIsALUInConstantIn,
 
-		.ifidInsnOut
+		ifidInsnOut
 	);
 
 
 
 	PC pc(
-		.pcOut,
-		.clk,
-		.rst,
-		.pcIn,
-		.exmemPcWrEnableOut
+		clk,
+		rst,
+		//output
+		pcOut,
+		//input
+		pcIn,
+		exmemPcWrEnableOut
 	);
 
 	BranchUnit branch(
-		.pcOut,
-		.pcIn,
-		.exmemBrCodeOut,
-		.exmemRdDataAOut,
-		.exmemRdDataBOut,
-		.exmemConstantOut
+		//output
+		pcIn,
+
+		//input
+		pcOut,
+		exmemBrCodeOut,
+		exmemRdDataAOut,
+		exmemRdDataBOut,
+		exmemConstantOut
 	);
 
 	RegisterFile regFile(
-		.clk,
+		clk,
 
-		.idexRdDataAIn,
-		.idexRdDataBIn,
+		idexRdDataAIn,
+		idexRdDataBIn,
 
-		.idexRSIn,
-		.idexRTIn,
+		idexRSIn,
+		idexRTIn,
 
-		.rfWrData,
-		.memwbWrNumOut,
-		.memwbRfWrEnableOut
+		rfWrData,
+		memwbWrNumOut,
+		memwbRfWrEnableOut
 	);
 
 	ALU alu(
-		.exmemALUOutIn,
-		
-		.aluInA,
-		.aluInB,
-		.idexALUCodeOut
+		exmemALUOutIn,
+	
+		aluInA,
+		aluInB,
+		idexALUCodeOut
 	);
 
 	always_comb begin
