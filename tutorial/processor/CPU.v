@@ -32,8 +32,8 @@ module CPU(
 	//hazard detection
 	logic cHazard;
 	//ifid
-	logic `InsnAddrPath ifidPCAddrOut;
-	logic `InsnPath ifidInsnOut;
+	`InsnAddrPath ifidPCAddrOut;
+	`InsnPath ifidInsnOut;
 
 	//idex
 	`InsnAddrPath idexInsnIn;
@@ -65,7 +65,7 @@ module CPU(
 	`RegNumPath idexRDOut;
 	`ShamtPath idexShamtOut;
 	`FunctPath idexFunctOut;
-	`ConstantPath idexConstatnOut;
+	`ConstantPath idexConstantOut;
 	`ALUCodePath idexALUCodeOut;
 	`BrCodePath idexBrCodeOut;
 
@@ -138,7 +138,7 @@ module CPU(
 		.insn,
 		//output
 		.ifidPCAddrOut,
-		.ifidInsnOut,
+		.ifidInsnOut
 	);
 
 	IDEX idex(
@@ -191,7 +191,7 @@ module CPU(
 
 		.idexRSOut,
 		.idexRTOut,
-		.idexRDOut,
+		.idexRDOut
 	);
 
 	EXMEM exmem(
@@ -231,7 +231,7 @@ module CPU(
 		.exmemWrNumOut,
 		.exmemRSOut,
 		.exmemRTOut,
-		.exmemRDOut,
+		.exmemRDOut
 	);
 
 
@@ -249,7 +249,7 @@ module CPU(
 		.memwbAluOutOut,
 		.memwbWrNumOut,
 		.memwbIsLoadInsnOut,
-		.memwbRfWrEnableOut,
+		.memwbRfWrEnableOut
 	);
 
 	Decoder decoder(
@@ -278,10 +278,10 @@ module CPU(
 
 	PC pc(
 		.pcOut,
-		.clk
-		.rst
+		.clk,
+		.rst,
 		.pcIn,
-		.exmemPcWrEnableOut,
+		.exmemPcWrEnableOut
 	);
 
 	BranchUnit branch(
@@ -290,7 +290,7 @@ module CPU(
 		.exmemBrCodeOut,
 		.exmemRdDataAOut,
 		.exmemRdDataBOut,
-		.exmemConstantOut,
+		.exmemConstantOut
 	);
 
 	RegisterFile regFile(
@@ -304,7 +304,7 @@ module CPU(
 
 		.rfWrData,
 		.memwbWrNumOut,
-		.memwbRfWrEnableOut,
+		.memwbRfWrEnableOut
 	);
 
 	ALU alu(
@@ -331,7 +331,7 @@ module CPU(
 
 		exmemRdDataAIn = idexRdDataAOut;
 		exmemRdDataBIn = idexRdDataBOut;
-		exmemConstantIn = idexConstatnOut;
+		exmemConstantIn = idexConstantOut;
 		exmemRSIn = idexRSOut;
 		exmemRTIn = idexRTOut;
 		exmemRDIn = idexRDOut;
@@ -346,9 +346,9 @@ module CPU(
 		exmemWrNumIn = idexIsDstRtOut ? idexRTOut : idexRDOut;
 
 		aluInA = idexIsSrcA_RtOut ? idexRdDataBOut : idexRdDataAOut;
-		aluInB = idexIsALUInConstantOut ? idexConstatnOut : idexRdDataBOut;
+		aluInB = idexIsALUInConstantOut ? idexConstantOut : idexRdDataBOut;
 
-		dataWrEnable = dcIsStoreInsn;
+		dataWrEnable = exmemIsStoreInsnOut;
 	end
 
 endmodule
