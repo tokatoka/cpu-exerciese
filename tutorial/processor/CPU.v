@@ -98,6 +98,7 @@ module CPU(
 		.rdDataB ( rfRdDataT ),
 
 		.clk ( clk ),
+		.rst ( rst ),
 		.rdNumA ( dcRS ),
 		.rdNumB ( dcRT ),
 		.wrData ( rfWrData ),
