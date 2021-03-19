@@ -26,7 +26,6 @@ module CPU(
 	`DataPath rfWrData;
 
 	//ALU
-	`DataPath aluOut;
 	`DataPath aluInA;
 	`DataPath aluInB;
 
