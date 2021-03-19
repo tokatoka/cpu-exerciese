@@ -7,8 +7,6 @@ module Forward(
 
     input logic exmemRfWrEnableOut,
     input `RegNumPath exmemRDOut,
-    input `RegNumPath ifidRSOut,
-    input `RegNumPath ifidRTOut,
     input `RegNumPath idexRSOut,
     input `RegNumPath idexRTOut,
 

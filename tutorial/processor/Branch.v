@@ -2,6 +2,7 @@
 
 module BranchUnit(
     output `InsnAddrPath pcOut,
+    output logic brTaken;
 
     input `InsnAddrPath pcIn,
     input `BrCodePath brCode,
