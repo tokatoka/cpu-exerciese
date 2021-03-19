@@ -33,7 +33,9 @@ SOURCES = \
 	EXMEM.v \
 	MEMWB.v	\
 	Types.v \
-	PCAdder.v
+	PCAdder.v \
+	Forward.v \
+	ForwardMUX.v
 
 DEPS = \
 	$(SOURCES) \
