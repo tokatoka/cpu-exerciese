@@ -310,7 +310,8 @@ module CPU(
 
 	RegisterFile regFile(
 		clk,
-
+		rst,
+		
 		idexRdDataAIn,
 		idexRdDataBIn,
 
