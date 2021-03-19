@@ -17,7 +17,7 @@ module RegisterFile(
 );
     `DataPath storage[ 0 : `REG_FILE_SIZE - 1 ];
 
-    always_ff @(posedge clk or negedge clk) begin
+    always_ff @(posedge clk or negedge rst) begin
         if (wrEnable) begin
             storage[wrNum] <= wrData;
         end
