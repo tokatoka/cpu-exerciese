@@ -64,7 +64,7 @@ module EXMEM(
         end
         else begin
             PCAddrOut <= PCAddrIn;
-            ALUOutOut <= PCAddrIn;
+            ALUOutOut <= ALUOutIn;
             BrCodeOut <= BrCodeIn;
             RfWrEnableOut <= RfWrEnableIn;
             IsStoreInsnOut <= IsStoreInsnIn;
