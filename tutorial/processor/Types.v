@@ -11,7 +11,7 @@
 `define FunctPath logic [ `FUNCT_WIDTH-1 : 0 ]
 
 `define SHAMT_WIDTH 6
-`define SHAMT_POS 5
+`define SHAMT_POS 6
 `define ShamtPath logic [ `SHAMT_POS + `SHAMT_WIDTH - 1 : `SHAMT_POS ]
 
 `define CONSTANT_WIDTH 16
