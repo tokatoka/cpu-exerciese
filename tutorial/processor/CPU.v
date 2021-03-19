@@ -34,6 +34,8 @@ module CPU(
 	//ifid
 	`InsnAddrPath ifidPCAddrOut;
 	`InsnPath ifidInsnOut;
+	`RegNumPath ifidRSOut;
+	`RegNumPath ifidRTOut;
 
 	//dead variable
 	`OpPath idexOpIn;
@@ -131,6 +133,12 @@ module CPU(
 	`RegNumPath memwbRTOut;
 	`RegNumPath memwbRDOut;
 
+	//forwardcode
+	`ForwardCodePath forwardA;
+	`ForwardCodePath forwardB;
+	`DataPath selectedA;
+	`DataPath selectedB;
+
 	IFID ifid(
 		//common
 		clk,
@@ -141,7 +149,10 @@ module CPU(
 		insn,
 		//output
 		ifidPCAddrOut,
-		ifidInsnOut
+		ifidInsnOut,
+
+		ifidRSOut,
+		ifidRTOut
 	);
 
 
@@ -331,6 +342,39 @@ module CPU(
 		idexALUCodeOut
 	);
 
+	Forward forward(
+		exmemRfWrEnableOut,
+		exmemRDOut,
+		ifidRSOut,
+		ifidRTOut,
+		idexRSOut,
+		idexRTOut,
+		memwbRfWrEnableOut,
+		memwbRDOut,
+		memwbRSOut,
+		memwbRTOut,
+
+		forwardA,
+		forwardB
+	);
+
+	//this guy takes care of forwarding RS register
+	ForwardMUX forwardRS(
+		idexRdDataAOut,
+		exmemALUOutOut,
+		rfWrData,
+		forwardA,
+		selectedA
+	);
+
+	ForwardMUX forwardRT(
+		idexRdDataBOut,
+		exmemALUOutOut,
+		rfWrData,
+		forwardB,
+		selectedB
+	);
+
 	always_comb begin
 		cHazard = `FALSE;
 
@@ -344,8 +388,8 @@ module CPU(
 		exmemIsLoadInsnIn = idexIsLoadInsnOut;
 		exmemPcWrEnableIn = idexPcWrEnableOut;
 
-		exmemRdDataAIn = idexRdDataAOut;
-		exmemRdDataBIn = idexRdDataBOut;
+		exmemRdDataAIn = selectedA;
+		exmemRdDataBIn = selectedB;
 		exmemConstantIn = idexConstantOut;
 		exmemRSIn = idexRSOut;
 		exmemRTIn = idexRTOut;
@@ -367,8 +411,8 @@ module CPU(
 		rfWrData = memwbIsLoadInsnOut ? memwbDataOut : memwbAluOutOut;
 		exmemWrNumIn = idexIsDstRtOut ? idexRTOut : idexRDOut;
 
-		aluInA = idexIsSrcA_RtOut ? idexRdDataBOut : idexRdDataAOut;
-		aluInB = idexIsALUInConstantOut ? idexConstantOut : idexRdDataBOut;
+		aluInA = idexIsSrcA_RtOut ? selectedB : selectedA;
+		aluInB = idexIsALUInConstantOut ? idexConstantOut : selectedB;
 
 		dataWrEnable = exmemIsStoreInsnOut;
 	end

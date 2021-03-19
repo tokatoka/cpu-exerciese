@@ -9,7 +9,11 @@ module IFID(
     input `InsnPath InsnIn,
 
     output `InsnAddrPath PCAddrOut,
-    output `InsnPath InsnOut
+    output `InsnPath InsnOut,
+
+    //we need to decode these two before decoder does for hazard detection
+    output `RegNumPath RSOut,
+    output `RegNumPath RTOut
 );
 
     always_ff @(posedge clk or negedge rst) begin
@@ -21,6 +25,11 @@ module IFID(
             PCAddrOut <= PCAddrIn;
             InsnOut <= InsnIn;
         end
+    end
+
+    always_comb begin
+        RSOut = InsnIn[ `RS_POS +: `REG_NUM_WIDTH ];
+        RTOut = InsnIn[ `RT_POS +: `REG_NUM_WIDTH ];
     end
 
 
