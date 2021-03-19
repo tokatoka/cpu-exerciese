@@ -32,7 +32,8 @@ SOURCES = \
 	IDEX.v \
 	EXMEM.v \
 	MEMWB.v	\
-	Types.v
+	Types.v \
+	PCAdder.v
 
 DEPS = \
 	$(SOURCES) \

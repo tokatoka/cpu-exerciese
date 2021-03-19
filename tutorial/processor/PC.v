@@ -5,6 +5,7 @@ module PC(
     input logic rst,
     output `InsnAddrPath addrOut,
 
+    input `InsnAddrPath branchOut,
     input `InsnAddrPath addrIn,
     input logic wrEnable
 );
@@ -15,7 +16,7 @@ module PC(
             pc <= `INSN_RESET_VECTOR;
         end
         else if(wrEnable) begin
-            pc <= addrIn;
+            pc <= branchOut;
         end
         else begin
             pc <= pc + `INSN_PC_INC;

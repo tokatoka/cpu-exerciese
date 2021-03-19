@@ -19,6 +19,7 @@ module CPU(
 	//PC
 	`InsnAddrPath pcOut;
 	`InsnAddrPath pcIn;
+	`InsnAddrPath branchOut;
 	logic pcWrEnable;
 
 	//Register files
@@ -278,7 +279,12 @@ module CPU(
 		ifidInsnOut
 	);
 
-
+	PCAdder pcadder(
+		//output
+		pcIn,
+		//input
+		pcOut
+	);
 
 	PC pc(
 		clk,
@@ -286,13 +292,14 @@ module CPU(
 		//output
 		pcOut,
 		//input
+		branchOut,
 		pcIn,
 		exmemPcWrEnableOut
 	);
 
 	BranchUnit branch(
 		//output
-		pcIn,
+		branchOut,
 
 		//input
 		exmemPCAddrOut,
