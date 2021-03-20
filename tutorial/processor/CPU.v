@@ -38,6 +38,8 @@ module CPU(
 	//ifid
 	`InsnAddrPath ifidPCAddrOut;
 	`InsnPath ifidInsnOut;
+	`RegNumPath ifidRSIn;
+	`RegNumPath ifidRTIn;
 	`RegNumPath ifidRSOut;
 	`RegNumPath ifidRTOut;
 
@@ -156,6 +158,8 @@ module CPU(
 		//input
 		pcOut,
 		insn,
+		ifidRSIn,
+		ifidRTIn,
 		//output
 		ifidPCAddrOut,
 		ifidInsnOut,
@@ -416,6 +420,11 @@ module CPU(
 
 	always_comb begin
 		cHazard = `FALSE;
+
+		//predecode
+		ifidRSIn = insn[ `RS_POS +: `REG_NUM_WIDTH ];
+		ifidRTIn = insn[ `RT_POS +: `REG_NUM_WIDTH ];
+
 
 		//directly forwarding between pipeline registers
 		idexPCAddrIn = ifidPCAddrOut;
