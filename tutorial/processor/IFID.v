@@ -26,12 +26,12 @@ module IFID(
             RSOut <= `REG_NUM_WIDTH'h0;
             RTOut <= `REG_NUM_WIDTH'h0;
         end
-        else begin
+        
+        if(!dHazard) begin
             PCAddrOut <= PCAddrIn;
             InsnOut <= InsnIn;
             RSOut <= RSIn;
             RTOut <= RTIn;
         end
     end
-
 endmodule

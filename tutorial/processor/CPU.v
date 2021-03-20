@@ -359,6 +359,7 @@ module CPU(
 
 	Forward forward(
 		exmemRfWrEnableOut,
+		exmemIsLoadInsnOut,
 		exmemWrNumOut,
 		idexRSOut,
 		idexRTOut,
@@ -411,7 +412,7 @@ module CPU(
 		ifidRSOut,
 		ifidRTOut,
 		idexRTOut,
-		idexIsLoadInsnIn,
+		idexIsLoadInsnOut,
 		brTaken,
 
 		cHazard,

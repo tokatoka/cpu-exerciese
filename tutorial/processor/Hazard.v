@@ -7,7 +7,7 @@ module Hazard(
     input `RegNumPath ifidRSOut,
     input `RegNumPath ifidRTOut,
     input `RegNumPath idexRTOut,
-    input logic idexIsLoadInsnIn,
+    input logic idexIsLoadInsnOut,
     input logic brTaken,
     output logic cHazard,
     output logic dHazard
@@ -21,7 +21,7 @@ module Hazard(
             cHazard <= `FALSE;
         end
 
-        if(rst && idexIsLoadInsnIn && ((idexRTOut == ifidRSOut) || (idexRTOut == ifidRTOut))) begin
+        if(rst && idexIsLoadInsnOut && ((idexRTOut == ifidRSOut) || (idexRTOut == ifidRTOut))) begin
             dHazard <= `TRUE;
         end else begin
             dHazard <= `FALSE;

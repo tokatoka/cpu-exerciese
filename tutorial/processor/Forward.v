@@ -3,6 +3,7 @@
 //forwarding unit
 module Forward(
     input logic exmemRfWrEnableOut,
+    input logic exmemIsLoadInsnOut,
     input `RegNumPath exmemWrNumOut,
     input `RegNumPath idexRSOut,
     input `RegNumPath idexRTOut,
@@ -20,20 +21,20 @@ module Forward(
 );
 
     always_comb begin
-        if(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRSOut) begin
+        if(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRSOut && !exmemIsLoadInsnOut) begin
             forwardA = `EXMEM_FORWARD;
         end 
-        else if(memwbRfWrEnableOut && memwbWrNumOut != 0 &&!(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRSOut) && memwbWrNumOut == idexRSOut) begin
+        else if(memwbRfWrEnableOut && memwbWrNumOut != 0 &&!(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRSOut && !exmemIsLoadInsnOut) && memwbWrNumOut == idexRSOut) begin
             forwardA = `MEMWB_FORWARD;
         end
         else begin
             forwardA = `NO_FORWARD;
         end
 
-        if(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRTOut) begin
+        if(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRTOut && !exmemIsLoadInsnOut) begin
             forwardB = `EXMEM_FORWARD;
         end 
-        else if(memwbRfWrEnableOut && memwbWrNumOut != 0 && !(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRTOut) && memwbWrNumOut == idexRTOut) begin
+        else if(memwbRfWrEnableOut && memwbWrNumOut != 0 && !(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRTOut && !exmemIsLoadInsnOut) && memwbWrNumOut == idexRTOut) begin
             forwardB = `MEMWB_FORWARD;
         end
         else begin
