@@ -4,6 +4,7 @@ module IFID(
     input logic clk,
     input logic rst,
     input logic cHazard,
+    input logic dHazard,
 
     input `InsnAddrPath PCAddrIn,
     input `InsnPath InsnIn,

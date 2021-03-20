@@ -34,6 +34,7 @@ module CPU(
 
 	//hazard detection
 	logic cHazard;
+	logic dHazard;
 	//ifid
 	`InsnAddrPath ifidPCAddrOut;
 	`InsnPath ifidInsnOut;
@@ -151,6 +152,7 @@ module CPU(
 		clk,
 		rst,
 		cHazard,
+		dHazard,
 		//input
 		pcOut,
 		insn,
@@ -306,6 +308,7 @@ module CPU(
 	PC pc(
 		clk,
 		rst,
+		dHazard,
 		//output
 		pcOut,
 		//input
@@ -395,6 +398,20 @@ module CPU(
 		rfWrData,
 		forwardD,
 		selectedD
+	);
+
+	Hazard hazard(
+		clk,
+		rst,
+
+		ifidRSOut,
+		ifidRTOut,
+		idexRTOut,
+		idexIsLoadInsnIn,
+		brTaken,
+
+		cHazard,
+		dHazard
 	);
 
 	always_comb begin

@@ -36,7 +36,8 @@ SOURCES = \
 	PCAdder.v \
 	Forward.v \
 	ForwardMUXBefore.v \
-	ForwardMUXAfter.v
+	ForwardMUXAfter.v \
+	Hazard.v
 
 DEPS = \
 	$(SOURCES) \
