@@ -35,7 +35,7 @@ SOURCES = \
 	Types.v \
 	PCAdder.v \
 	Forward.v \
-	ForwardMUX.v
+	ForwardMUX.v 
 
 DEPS = \
 	$(SOURCES) \

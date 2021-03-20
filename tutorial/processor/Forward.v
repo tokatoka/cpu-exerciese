@@ -19,20 +19,20 @@ module Forward(
 
     always_comb begin
         if(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRSOut) begin
-            forwardA = `MEMWB_FORWARD;
-        end 
-        else if(memwbRfWrEnableOut && !(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut != idexRSOut) && memwbWrNumOut == idexRSOut) begin
             forwardA = `EXMEM_FORWARD;
+        end 
+        else if(memwbRfWrEnableOut && memwbWrNumOut != 0 &&!(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRSOut) && memwbWrNumOut == idexRSOut) begin
+            forwardA = `MEMWB_FORWARD;
         end
         else begin
             forwardA = `NO_FORWARD;
         end
 
         if(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRTOut) begin
-            forwardB = `MEMWB_FORWARD;
-        end 
-        else if(memwbRfWrEnableOut && !(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut != idexRTOut) && memwbWrNumOut == idexRTOut) begin
             forwardB = `EXMEM_FORWARD;
+        end 
+        else if(memwbRfWrEnableOut && memwbWrNumOut != 0 && !(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRTOut) && memwbWrNumOut == idexRTOut) begin
+            forwardB = `MEMWB_FORWARD;
         end
         else begin
             forwardB = `NO_FORWARD;
