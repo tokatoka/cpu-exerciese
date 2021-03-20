@@ -29,6 +29,9 @@ module CPU(
 	`DataPath aluInA;
 	`DataPath aluInB;
 
+	//branch
+	logic brTaken;
+
 	//hazard detection
 	logic cHazard;
 	//ifid
@@ -310,6 +313,7 @@ module CPU(
 	BranchUnit branch(
 		//output
 		branchOut,
+		brTaken,
 
 		//input
 		exmemPCAddrOut,
@@ -344,15 +348,11 @@ module CPU(
 
 	Forward forward(
 		exmemRfWrEnableOut,
-		exmemRDOut,
-		ifidRSOut,
-		ifidRTOut,
+		exmemWrNumOut,
 		idexRSOut,
 		idexRTOut,
 		memwbRfWrEnableOut,
-		memwbRDOut,
-		memwbRSOut,
-		memwbRTOut,
+		memwbWrNumOut,
 
 		forwardA,
 		forwardB

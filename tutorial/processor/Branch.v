@@ -2,7 +2,7 @@
 
 module BranchUnit(
     output `InsnAddrPath pcOut,
-    output logic brTaken;
+    output logic brTaken,
 
     input `InsnAddrPath pcIn,
     input `BrCodePath brCode,
@@ -10,7 +10,6 @@ module BranchUnit(
     input `DataPath regRT,
     input `ConstantPath constant
 );
-    logic brTaken;
     `InsnAddrPath disp;
 
     always_comb begin
