@@ -8,8 +8,6 @@ module IFID(
 
     input `InsnAddrPath PCAddrIn,
     input `InsnPath InsnIn,
-    input `RegNumPath RSIn,
-    input `RegNumPath RTIn,
 
     output `InsnAddrPath PCAddrOut,
     output `InsnPath InsnOut,
@@ -23,15 +21,21 @@ module IFID(
         if(cHazard || !rst) begin
             PCAddrOut <= `INSN_ADDR_WIDTH'h0;
             InsnOut <= `INSN_WIDTH'h0;
-            RSOut <= `REG_NUM_WIDTH'h0;
-            RTOut <= `REG_NUM_WIDTH'h0;
         end
-        
-        if(!dHazard) begin
+        else if(!dHazard) begin
             PCAddrOut <= PCAddrIn;
             InsnOut <= InsnIn;
-            RSOut <= RSIn;
-            RTOut <= RTIn;
+        end
+    end
+
+    always_comb begin
+        if(cHazard || !rst) begin
+            RSOut = `REG_NUM_WIDTH'h0;
+            RTOut = `REG_NUM_WIDTH'h0;
+        end
+        else if(!dHazard) begin
+            RSOut = InsnOut[ `RS_POS +: `REG_NUM_WIDTH ];
+            RTOut = InsnOut[ `RT_POS +: `REG_NUM_WIDTH ];
         end
     end
 endmodule

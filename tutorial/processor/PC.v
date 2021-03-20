@@ -16,8 +16,7 @@ module PC(
         if(!rst) begin
                 pc <= `INSN_RESET_VECTOR;
         end
-        
-        if(!dHazard) begin
+        else if(!dHazard) begin
             if(wrEnable) begin
                 pc <= branchOut;
             end

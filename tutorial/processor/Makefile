@@ -37,7 +37,8 @@ SOURCES = \
 	Forward.v \
 	ForwardMUXBefore.v \
 	ForwardMUXAfter.v \
-	Hazard.v
+	Hazard.v \
+	HazardMux.v
 
 DEPS = \
 	$(SOURCES) \

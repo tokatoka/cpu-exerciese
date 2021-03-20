@@ -14,17 +14,17 @@ module Hazard(
 );
 
 
-    always_ff @(posedge clk or negedge rst) begin
+    always_comb begin
         if(rst && brTaken) begin
-            cHazard <= `TRUE;
+            cHazard = `TRUE;
         end else begin
-            cHazard <= `FALSE;
+            cHazard = `FALSE;
         end
 
         if(rst && idexIsLoadInsnOut && ((idexRTOut == ifidRSOut) || (idexRTOut == ifidRTOut))) begin
-            dHazard <= `TRUE;
+            dHazard = `TRUE;
         end else begin
-            dHazard <= `FALSE;
+            dHazard = `FALSE;
         end
     end
 

@@ -35,11 +35,17 @@ module CPU(
 	//hazard detection
 	logic cHazard;
 	logic dHazard;
+	logic hazardMuxPcWrEnable;
+	logic hazardMuxIsLoadInsn;
+	logic hazardMuxIsStoreInsn;
+	logic hazardMuxIsSrcA_Rt;
+	logic hazardMuxIsDstRt;
+	logic hazardMuxRfWrEnable;
+	logic hazardMuxIsALUInConstant;
+
 	//ifid
 	`InsnAddrPath ifidPCAddrOut;
 	`InsnPath ifidInsnOut;
-	`RegNumPath ifidRSIn;
-	`RegNumPath ifidRTIn;
 	`RegNumPath ifidRSOut;
 	`RegNumPath ifidRTOut;
 
@@ -158,8 +164,6 @@ module CPU(
 		//input
 		pcOut,
 		insn,
-		ifidRSIn,
-		ifidRTIn,
 		//output
 		ifidPCAddrOut,
 		ifidInsnOut,
@@ -291,15 +295,34 @@ module CPU(
 		idexALUCodeIn,
 		idexBrCodeIn,
 	
+		hazardMuxPcWrEnable,
+		hazardMuxIsLoadInsn,
+		hazardMuxIsStoreInsn,
+		hazardMuxIsSrcA_Rt,
+		hazardMuxIsDstRt,
+		hazardMuxRfWrEnable,
+		hazardMuxIsALUInConstant,
+
+		ifidInsnOut
+	);
+
+	HazardMux hazardmux(
+		hazardMuxPcWrEnable,
+		hazardMuxIsLoadInsn,
+		hazardMuxIsStoreInsn,
+		hazardMuxIsSrcA_Rt,
+		hazardMuxIsDstRt,
+		hazardMuxRfWrEnable,
+		hazardMuxIsALUInConstant,
+		dHazard,
+
 		idexPcWrEnableIn,
 		idexIsLoadInsnIn,
 		idexIsStoreInsnIn,
 		idexIsSrcA_RtIn,
 		idexIsDstRtIn,
 		idexRfWrEnableIn,
-		idexIsALUInConstantIn,
-
-		ifidInsnOut
+		idexIsALUInConstantIn
 	);
 
 	PCAdder pcadder(
@@ -421,11 +444,6 @@ module CPU(
 
 	always_comb begin
 		cHazard = `FALSE;
-
-		//predecode
-		ifidRSIn = insn[ `RS_POS +: `REG_NUM_WIDTH ];
-		ifidRTIn = insn[ `RT_POS +: `REG_NUM_WIDTH ];
-
 
 		//directly forwarding between pipeline registers
 		idexPCAddrIn = ifidPCAddrOut;
