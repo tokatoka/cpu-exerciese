@@ -28,8 +28,8 @@ module IFID(
     end
 
     always_comb begin
-        RSOut = InsnIn[ `RS_POS +: `REG_NUM_WIDTH ];
-        RTOut = InsnIn[ `RT_POS +: `REG_NUM_WIDTH ];
+        RSOut = InsnOut[ `RS_POS +: `REG_NUM_WIDTH ];
+        RTOut = InsnOut[ `RT_POS +: `REG_NUM_WIDTH ];
     end
 
 

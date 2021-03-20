@@ -2,19 +2,21 @@
 
 //forwarding unit
 module Forward(
-
-
-
     input logic exmemRfWrEnableOut,
     input `RegNumPath exmemWrNumOut,
     input `RegNumPath idexRSOut,
     input `RegNumPath idexRTOut,
+    input `RegNumPath ifidRSOut,
+    input `RegNumPath ifidRTOut,
+
 
     input logic memwbRfWrEnableOut,
     input `RegNumPath memwbWrNumOut,
 
     output `ForwardCodePath forwardA,
-    output `ForwardCodePath forwardB
+    output `ForwardCodePath forwardB,
+    output `ForwardCodePath forwardC,
+    output `ForwardCodePath forwardD
 );
 
     always_comb begin
@@ -36,6 +38,20 @@ module Forward(
         end
         else begin
             forwardB = `NO_FORWARD;
+        end
+
+        if(memwbRfWrEnableOut && memwbWrNumOut != 0 && memwbWrNumOut == ifidRSOut) begin
+            forwardC = `MEMWB_TOIDEXIN;
+        end
+        else begin
+            forwardC = `NO_FORWARD;
+        end
+
+        if(memwbRfWrEnableOut && memwbWrNumOut != 0 && memwbWrNumOut == ifidRTOut) begin
+            forwardD = `MEMWB_TOIDEXIN;
+        end
+        else begin
+            forwardD = `NO_FORWARD;
         end
     end
 

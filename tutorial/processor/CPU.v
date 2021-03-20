@@ -139,8 +139,12 @@ module CPU(
 	//forwardcode
 	`ForwardCodePath forwardA;
 	`ForwardCodePath forwardB;
+	`ForwardCodePath forwardC;
+	`ForwardCodePath forwardD;
 	`DataPath selectedA;
 	`DataPath selectedB;
+	`DataPath selectedC;
+	`DataPath selectedD;
 
 	IFID ifid(
 		//common
@@ -178,8 +182,8 @@ module CPU(
 		idexBrCodeIn,
 		idexALUCodeIn,
 
-		idexRdDataAIn,
-		idexRdDataBIn,
+		selectedC,
+		selectedD,
 		idexConstatnIn,
 
 		idexRSIn,
@@ -351,15 +355,19 @@ module CPU(
 		exmemWrNumOut,
 		idexRSOut,
 		idexRTOut,
+		ifidRSOut,
+		ifidRTOut,
 		memwbRfWrEnableOut,
 		memwbWrNumOut,
 
 		forwardA,
-		forwardB
+		forwardB,
+		forwardC,
+		forwardD
 	);
 
 	//this guy takes care of forwarding RS register
-	ForwardMUX forwardRS(
+	ForwardMUXAfter forwardRS(
 		idexRdDataAOut,
 		exmemALUOutOut,
 		rfWrData,
@@ -367,12 +375,26 @@ module CPU(
 		selectedA
 	);
 
-	ForwardMUX forwardRT(
+	ForwardMUXAfter forwardRT(
 		idexRdDataBOut,
 		exmemALUOutOut,
 		rfWrData,
 		forwardB,
 		selectedB
+	);
+
+	ForwardMUXBefore ForwardRSb(
+		idexRdDataAIn,
+		rfWrData,
+		forwardC,
+		selectedC
+	);
+
+	ForwardMUXBefore ForwardRTb(
+		idexRdDataBIn,
+		rfWrData,
+		forwardD,
+		selectedD
 	);
 
 	always_comb begin

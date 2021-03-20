@@ -1,6 +1,6 @@
 `include "Types.v"
 
-module ForwardMUX(
+module ForwardMUXAfter(
     input `DataPath idexData,
     input `DataPath exmemData,
     input `DataPath memwbData,

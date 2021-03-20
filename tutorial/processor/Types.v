@@ -63,7 +63,7 @@
 `define NO_FORWARD 0
 `define EXMEM_FORWARD 1
 `define MEMWB_FORWARD 2
-
+`define MEMWB_TOIDEXIN 3
 
 `define BR_CODE_WIDTH 2
 `define BrCodePath logic [ `BR_CODE_WIDTH-1 : 0 ]
