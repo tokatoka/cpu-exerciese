@@ -18,7 +18,6 @@ module CPU(
 	
 	//PC
 	`InsnAddrPath pcOut;
-	`InsnAddrPath pcIn;
 	`InsnAddrPath branchOut;
 	logic pcWrEnable;
 
@@ -177,7 +176,6 @@ module CPU(
 		//common
 		clk,
 		rst,
-		cHazard,
 
 		//input
 		idexPCAddrIn,
@@ -225,7 +223,6 @@ module CPU(
 	EXMEM exmem(
 		clk,
 		rst,
-		cHazard,
 
 		exmemPCAddrIn,
 		exmemALUOutIn,
@@ -327,7 +324,7 @@ module CPU(
 
 	PCAdder pcadder(
 		//output
-		pcIn,
+		insnAddr,
 		//input
 		pcOut,
 		dHazard
@@ -350,11 +347,11 @@ module CPU(
 		brTaken,
 
 		//input
-		exmemPCAddrOut,
-		exmemBrCodeOut,
-		exmemRdDataAOut,
-		exmemRdDataBOut,
-		exmemConstantOut
+		idexPCAddrIn,
+		idexBrCodeIn,
+		idexRdDataAIn,
+		idexRdDataBIn,
+		idexConstatnIn
 	);
 
 	RegisterFile regFile(
@@ -469,8 +466,6 @@ module CPU(
 		memwbRSIn = exmemRSOut;
 		memwbRTIn = exmemRTOut;
 		memwbRDIn = exmemRDOut;
-
-		insnAddr = pcIn;
 
 		dataOut = exmemRdDataBOut;
 		dataAddr = exmemRdDataAOut[ `DATA_ADDR_WIDTH - 1 : 0 ] + `EXPAND_ADDRESS( exmemConstantOut );

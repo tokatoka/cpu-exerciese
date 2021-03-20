@@ -7,6 +7,7 @@ module Hazard(
     input `RegNumPath ifidRSOut,
     input `RegNumPath ifidRTOut,
     input `RegNumPath idexRTOut,
+
     input logic idexIsLoadInsnOut,
     input logic brTaken,
     output logic cHazard,

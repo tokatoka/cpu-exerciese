@@ -1,5 +1,5 @@
 `include "Types.v"
-
+//TODO: change addrIn for branch instructions
 module PCAdder(
     output `InsnAddrPath addrOut,
     input `InsnAddrPath addrIn,

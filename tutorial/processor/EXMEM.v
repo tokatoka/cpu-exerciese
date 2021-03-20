@@ -3,7 +3,6 @@
 module EXMEM(
     input logic clk,
     input logic rst,
-    input logic cHazard,
 
     input `InsnAddrPath PCAddrIn,
     input `DataPath ALUOutIn,
@@ -44,7 +43,7 @@ module EXMEM(
 );
 
     always_ff @(posedge clk or negedge rst) begin
-        if(cHazard || !rst) begin
+        if(!rst) begin
             PCAddrOut <= `INSN_ADDR_WIDTH'h0;
             ALUOutOut <= `DATA_WIDTH'h0;
             BrCodeOut <= `BR_CODE_WIDTH'h0;

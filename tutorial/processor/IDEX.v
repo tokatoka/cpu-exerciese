@@ -3,7 +3,6 @@
 module IDEX(
     input logic clk,
     input logic rst,
-    input logic cHazard,
 
     input `InsnAddrPath PCAddrIn,
 
@@ -47,7 +46,7 @@ module IDEX(
 );
 
     always_ff @(posedge clk or negedge rst) begin
-        if(cHazard || !rst) begin
+        if(!rst) begin
             PCAddrOut <= `INSN_ADDR_WIDTH'h0;
 
             IsDstRtOut <= `FALSE;
