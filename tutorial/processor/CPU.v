@@ -329,7 +329,8 @@ module CPU(
 		//output
 		pcIn,
 		//input
-		pcOut
+		pcOut,
+		dHazard
 	);
 
 	PC pc(
@@ -340,7 +341,6 @@ module CPU(
 		pcOut,
 		//input
 		branchOut,
-		pcIn,
 		exmemPcWrEnableOut
 	);
 

@@ -2,9 +2,15 @@
 
 module PCAdder(
     output `InsnAddrPath addrOut,
-    input `InsnAddrPath addrIn
+    input `InsnAddrPath addrIn,
+    input dHazard
 );
     always_comb begin
-        addrOut = addrIn + `INSN_PC_INC;
+        if(!dHazard) begin
+            addrOut = addrIn + `INSN_PC_INC;
+        end
+        else begin
+            addrOut = addrIn;
+        end
     end
 endmodule

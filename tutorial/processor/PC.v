@@ -7,7 +7,6 @@ module PC(
     output `InsnAddrPath addrOut,
 
     input `InsnAddrPath branchOut,
-    input `InsnAddrPath addrIn,
     input logic wrEnable
 );
 
