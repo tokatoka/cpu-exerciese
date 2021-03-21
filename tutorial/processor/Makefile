@@ -33,7 +33,7 @@ SOURCES = \
 	EXMEM.v \
 	MEMWB.v	\
 	Types.v \
-	PCAdder.v \
+	InsnFeeder.v \
 	Forward.v \
 	ForwardMUXBefore.v \
 	ForwardMUXAfter.v \

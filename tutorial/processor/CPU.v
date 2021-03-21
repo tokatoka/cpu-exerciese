@@ -30,6 +30,7 @@ module CPU(
 
 	//branch
 	logic brTaken;
+	logic brPcWrEnable;
 
 	//hazard detection
 	logic cHazard;
@@ -322,12 +323,14 @@ module CPU(
 		idexIsALUInConstantIn
 	);
 
-	PCAdder pcadder(
+	InsnFeeder insnfeeder(
 		//output
 		insnAddr,
 		//input
 		pcOut,
-		dHazard
+		dHazard,
+		branchOut,
+		brPcWrEnable
 	);
 
 	PC pc(
@@ -338,20 +341,22 @@ module CPU(
 		pcOut,
 		//input
 		branchOut,
-		exmemPcWrEnableOut
+		brPcWrEnable
 	);
 
 	BranchUnit branch(
 		//output
 		branchOut,
 		brTaken,
+		brPcWrEnable,
 
 		//input
 		idexPCAddrIn,
 		idexBrCodeIn,
 		idexRdDataAIn,
 		idexRdDataBIn,
-		idexConstatnIn
+		idexConstatnIn,
+		idexPcWrEnableIn
 	);
 
 	RegisterFile regFile(
