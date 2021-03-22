@@ -22,12 +22,6 @@ module Hazard(
 
 
     always_comb begin
-        if(rst && brTaken) begin
-            cHazard = `TRUE;
-        end else begin
-            cHazard = `FALSE;
-        end
-
         if((rst && idexIsLoadInsnOut && ((idexRTOut == ifidRSOut) || (idexRTOut == ifidRTOut))) ||
             (rst && ((idexRDOut == ifidRSOut) || (idexRDOut == ifidRTOut)) && idexRfWrEnableOut && !idexIsLoadInsnOut && (dcOp == `OP_CODE_BEQ || dcOp == `OP_CODE_BNE)) ||
             (rst && ((idexRTOut == ifidRSOut) || (idexRTOut == ifidRTOut)) && idexRfWrEnableOut && idexIsLoadInsnOut && (dcOp == `OP_CODE_BEQ || dcOp == `OP_CODE_BNE)) ||
@@ -37,6 +31,13 @@ module Hazard(
         end else begin
             dHazard = `FALSE;
         end
+
+        if(rst && brTaken && !dHazard) begin
+            cHazard = `TRUE;
+        end else begin
+            cHazard = `FALSE;
+        end
+
     end
 
 endmodule
