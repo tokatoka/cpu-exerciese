@@ -150,10 +150,14 @@ module CPU(
 	`ForwardCodePath forwardB;
 	`ForwardCodePath forwardC;
 	`ForwardCodePath forwardD;
+	`ForwardCodePath forwardE;
+	`ForwardCodePath forwardF;
 	`DataPath selectedA;
 	`DataPath selectedB;
 	`DataPath selectedC;
 	`DataPath selectedD;
+	`DataPath selectedE;
+	`DataPath selectedF;
 
 	IFID ifid(
 		//common
@@ -353,8 +357,8 @@ module CPU(
 		//input
 		idexPCAddrIn,
 		idexBrCodeIn,
-		idexRdDataAIn,
-		idexRdDataBIn,
+		selectedE,
+		selectedF,
 		idexConstatnIn,
 		idexPcWrEnableIn
 	);
@@ -396,7 +400,9 @@ module CPU(
 		forwardA,
 		forwardB,
 		forwardC,
-		forwardD
+		forwardD,
+		forwardE,
+		forwardF
 	);
 
 	//this guy takes care of forwarding RS register
@@ -428,6 +434,24 @@ module CPU(
 		rfWrData,
 		forwardD,
 		selectedD
+	);
+
+	ForwardMuxBranch ForwardRSBR(
+		idexRdDataAIn,
+		exmemALUOutOut,
+		rfWrData,
+
+		forwardE,
+		selectedE
+	);
+
+	ForwardMuxBranch ForwardRTBR(
+		idexRdDataBIn,
+		exmemALUOutOut,
+		rfWrData,
+
+		forwardF,
+		selectedF
 	);
 
 	Hazard hazard(

@@ -17,7 +17,9 @@ module Forward(
     output `ForwardCodePath forwardA,
     output `ForwardCodePath forwardB,
     output `ForwardCodePath forwardC,
-    output `ForwardCodePath forwardD
+    output `ForwardCodePath forwardD,
+    output `ForwardCodePath forwardE,
+    output `ForwardCodePath forwardF
 );
 
     always_comb begin
@@ -55,6 +57,26 @@ module Forward(
         end
         else begin
             forwardD = `NO_FORWARD;
+        end
+
+        if(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRSOut && !exmemIsLoadInsnOut) begin
+            forwardE = `EXMEM_TOBR;
+        end 
+        else if(memwbRfWrEnableOut && memwbWrNumOut != 0 &&!(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRSOut && !exmemIsLoadInsnOut) && memwbWrNumOut == idexRSOut) begin
+            forwardE = `MEMWB_TOBR;
+        end
+        else begin
+            forwardE = `NO_FORWARD;
+        end
+
+        if(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRTOut && !exmemIsLoadInsnOut) begin
+            forwardF = `EXMEM_TOBR;
+        end 
+        else if(memwbRfWrEnableOut && memwbWrNumOut != 0 && !(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRTOut && !exmemIsLoadInsnOut) && memwbWrNumOut == idexRTOut) begin
+            forwardF = `MEMWB_TOBR;
+        end
+        else begin
+            forwardF = `NO_FORWARD;
         end
 
         //exmem or memwb to branch

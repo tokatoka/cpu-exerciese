@@ -58,12 +58,14 @@
 `define ALU_CODE_XOR 6
 `define ALU_CODE_SLT 7
 
-`define FORWARD_CODE_WIDTH 2
+`define FORWARD_CODE_WIDTH 3
 `define ForwardCodePath logic [ `FORWARD_CODE_WIDTH-1 : 0 ]
 `define NO_FORWARD 0
 `define EXMEM_FORWARD 1
 `define MEMWB_FORWARD 2
 `define MEMWB_TOIDEXIN 3
+`define EXMEM_TOBR 4
+`define MEMWB_TOBR 5
 
 `define BR_CODE_WIDTH 2
 `define BrCodePath logic [ `BR_CODE_WIDTH-1 : 0 ]
