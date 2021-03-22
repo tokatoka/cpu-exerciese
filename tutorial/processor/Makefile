@@ -21,6 +21,7 @@ SOURCES = \
 	Decoder.v \
 	DMem.v \
 	IMem.v \
+	ClockDivider.v \
 	Main.v \
 	IOCtrl.v \
 	LEDDrv.v \
@@ -34,8 +35,7 @@ SOURCES = \
 	Types.v \
 	InsnFeeder.v \
 	Forward.v \
-	ForwardMUXBefore.v \
-	ForwardMUXAfter.v \
+	ForwardMUX.v \
 	Hazard.v \
 	HazardMux.v
 
