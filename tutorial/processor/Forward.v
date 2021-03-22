@@ -21,6 +21,7 @@ module Forward(
 );
 
     always_comb begin
+        //exmem or memwb to ALU
         if(exmemRfWrEnableOut && exmemWrNumOut != 0 && exmemWrNumOut == idexRSOut && !exmemIsLoadInsnOut) begin
             forwardA = `EXMEM_FORWARD;
         end 
@@ -48,12 +49,15 @@ module Forward(
             forwardC = `NO_FORWARD;
         end
 
+        //memwb to ifid
         if(memwbRfWrEnableOut && memwbWrNumOut != 0 && memwbWrNumOut == ifidRTOut) begin
             forwardD = `MEMWB_TOIDEXIN;
         end
         else begin
             forwardD = `NO_FORWARD;
         end
+
+        //exmem or memwb to branch
     end
 
 

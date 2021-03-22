@@ -436,10 +436,17 @@ module CPU(
 
 		ifidRSOut,
 		ifidRTOut,
+		idexRDOut,
 		idexRTOut,
-		idexIsLoadInsnOut,
-		brTaken,
+		exmemRTOut,
 
+		idexOpIn,
+		idexRfWrEnableOut,
+		exmemRfWrEnableOut,
+		idexIsLoadInsnOut,
+		exmemIsLoadInsnOut,
+
+		brTaken,
 		cHazard,
 		dHazard
 	);

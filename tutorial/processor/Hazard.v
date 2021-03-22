@@ -6,9 +6,15 @@ module Hazard(
 
     input `RegNumPath ifidRSOut,
     input `RegNumPath ifidRTOut,
+    input `RegNumPath idexRDOut,
     input `RegNumPath idexRTOut,
+    input `RegNumPath exmemRTOut,
 
+    input `OpPath dcOp,
+    input logic idexRfWrEnableOut,
+    input logic exmemRfWrEnableOut,
     input logic idexIsLoadInsnOut,
+    input logic exmemIsLoadInsnOut,
     input logic brTaken,
     output logic cHazard,
     output logic dHazard
@@ -22,7 +28,11 @@ module Hazard(
             cHazard = `FALSE;
         end
 
-        if(rst && idexIsLoadInsnOut && ((idexRTOut == ifidRSOut) || (idexRTOut == ifidRTOut))) begin
+        if((rst && idexIsLoadInsnOut && ((idexRTOut == ifidRSOut) || (idexRTOut == ifidRTOut))) ||
+            (rst && ((idexRDOut == ifidRSOut) || (idexRDOut == ifidRTOut)) && idexRfWrEnableOut && !idexIsLoadInsnOut && (dcOp == `OP_CODE_BEQ || dcOp == `OP_CODE_BNE)) ||
+            (rst && ((idexRTOut == ifidRSOut) || (idexRTOut == ifidRTOut)) && idexRfWrEnableOut && idexIsLoadInsnOut && (dcOp == `OP_CODE_BEQ || dcOp == `OP_CODE_BNE)) ||
+            (rst && ((exmemRTOut == ifidRSOut) || (exmemRTOut == ifidRTOut)) && exmemRfWrEnableOut && exmemIsLoadInsnOut && (dcOp == `OP_CODE_BEQ || dcOp == `OP_CODE_BNE)))
+        begin
             dHazard = `TRUE;
         end else begin
             dHazard = `FALSE;
