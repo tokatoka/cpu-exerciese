@@ -468,6 +468,7 @@ module CPU(
 		idexRfWrEnableOut,
 		exmemRfWrEnableOut,
 		idexIsLoadInsnOut,
+		idexIsDstRtOut,
 		exmemIsLoadInsnOut,
 
 		brTaken,
@@ -476,8 +477,6 @@ module CPU(
 	);
 
 	always_comb begin
-		cHazard = `FALSE;
-
 		//directly forwarding between pipeline registers
 		idexPCAddrIn = ifidPCAddrOut;
 

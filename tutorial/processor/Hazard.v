@@ -14,6 +14,7 @@ module Hazard(
     input logic idexRfWrEnableOut,
     input logic exmemRfWrEnableOut,
     input logic idexIsLoadInsnOut,
+    input logic idexIsDstRtOut,
     input logic exmemIsLoadInsnOut,
     input logic brTaken,
     output logic cHazard,
@@ -23,8 +24,8 @@ module Hazard(
 
     always_comb begin
         if((rst && idexIsLoadInsnOut && ((idexRTOut == ifidRSOut) || (idexRTOut == ifidRTOut))) ||
-            (rst && ((idexRDOut == ifidRSOut) || (idexRDOut == ifidRTOut)) && idexRfWrEnableOut && !idexIsLoadInsnOut && (dcOp == `OP_CODE_BEQ || dcOp == `OP_CODE_BNE)) ||
-            (rst && ((idexRTOut == ifidRSOut) || (idexRTOut == ifidRTOut)) && idexRfWrEnableOut && idexIsLoadInsnOut && (dcOp == `OP_CODE_BEQ || dcOp == `OP_CODE_BNE)) ||
+            (rst && ((idexRDOut == ifidRSOut) || (idexRDOut == ifidRTOut)) && idexRfWrEnableOut && !idexIsDstRtOut && (dcOp == `OP_CODE_BEQ || dcOp == `OP_CODE_BNE)) ||
+            (rst && ((idexRTOut == ifidRSOut) || (idexRTOut == ifidRTOut)) && idexRfWrEnableOut && idexIsDstRtOut && (dcOp == `OP_CODE_BEQ || dcOp == `OP_CODE_BNE)) ||
             (rst && ((exmemRTOut == ifidRSOut) || (exmemRTOut == ifidRTOut)) && exmemRfWrEnableOut && exmemIsLoadInsnOut && (dcOp == `OP_CODE_BEQ || dcOp == `OP_CODE_BNE)))
         begin
             dHazard = `TRUE;

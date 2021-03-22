@@ -22,7 +22,7 @@ module BranchUnit(
             default: brTaken = `FALSE;
         endcase
 
-        pcWrEnableOut = pcWrEnableIn;
+        pcWrEnableOut = pcWrEnableIn && brTaken;
         disp = `EXPAND_BR_DISPLACEMENT(constant);
         pcOut = pcIn + `INSN_PC_INC + (brTaken ? disp : `INSN_ADDR_WIDTH'h0 );
     end
