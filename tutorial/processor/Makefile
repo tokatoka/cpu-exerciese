@@ -17,20 +17,27 @@ TOPLEVEL_MODULE = H3_MainSim
 SOURCES = \
 	ALU.v \
 	Branch.v \
-	ClockDivider.v \
 	CPU.v \
 	Decoder.v \
 	DMem.v \
 	IMem.v \
+	ClockDivider.v \
 	Main.v \
 	IOCtrl.v \
 	LEDDrv.v \
 	MainSim.v \
 	PC.v \
 	RegFile.v \
+	IFID.v \
+	IDEX.v \
+	EXMEM.v \
+	MEMWB.v	\
 	Types.v \
-
-
+	InsnFeeder.v \
+	Forward.v \
+	ForwardMUX.v \
+	Hazard.v \
+	HazardMux.v
 
 DEPS = \
 	$(SOURCES) \

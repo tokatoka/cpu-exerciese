@@ -2,14 +2,16 @@
 
 module BranchUnit(
     output `InsnAddrPath pcOut,
+    output logic brTaken,
+    output logic pcWrEnableOut,
 
     input `InsnAddrPath pcIn,
     input `BrCodePath brCode,
     input `DataPath regRS,
     input `DataPath regRT,
-    input `ConstantPath constant
+    input `ConstantPath constant,
+    input logic pcWrEnableIn
 );
-    logic brTaken;
     `InsnAddrPath disp;
 
     always_comb begin
@@ -20,6 +22,7 @@ module BranchUnit(
             default: brTaken = `FALSE;
         endcase
 
+        pcWrEnableOut = pcWrEnableIn && brTaken;
         disp = `EXPAND_BR_DISPLACEMENT(constant);
         pcOut = pcIn + `INSN_PC_INC + (brTaken ? disp : `INSN_ADDR_WIDTH'h0 );
     end
